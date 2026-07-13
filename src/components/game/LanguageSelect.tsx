@@ -98,12 +98,14 @@ export default function LanguageSelect() {
             <LangOption
               flag="🇪🇸"
               name="Español"
+              code="ES"
               selected={lang === 'es'}
               onClick={() => { initAudio(); setLang('es'); }}
             />
             <LangOption
-              flag="🇬🇧"
+              flag=""
               name="English"
+              code="EN"
               selected={lang === 'en'}
               onClick={() => { initAudio(); setLang('en'); }}
             />
@@ -182,11 +184,13 @@ import { useState as useReactState } from 'react';
 function LangOption({
   flag,
   name,
+  code,
   selected,
   onClick,
 }: {
   flag: string;
   name: string;
+  code: string;
   selected: boolean;
   onClick: () => void;
 }) {
@@ -200,7 +204,13 @@ function LangOption({
       }`}
       style={{ borderWidth: '3px' }}
     >
-      <span className="text-3xl">{flag}</span>
+      {flag ? (
+        <span className="text-3xl">{flag}</span>
+      ) : (
+        <span className={`flex h-9 w-12 items-center justify-center border-3 font-pixel text-sm font-bold ${selected ? 'border-emerald-400 text-emerald-300 bg-emerald-500/10' : 'border-emerald-500/40 text-emerald-400/70 bg-black/40'}`} style={{ borderWidth: '3px' }}>
+          {code}
+        </span>
+      )}
       <span
         className={`font-pixel text-xs font-bold ${
           selected ? 'text-emerald-200' : 'text-emerald-400/70'
