@@ -34,12 +34,12 @@ export default function StatusBar() {
   const setUnlockedMode = useGameStore((s) => s.setUnlockedMode);
   const [muted, setMutedState] = useState(isMuted());
 
-  const completedCount = Object.keys(results).length;
+  const completedCount = unlockedMode ? JOB_LEVELS.length : Object.keys(results).length;
   const totalLevels = JOB_LEVELS.length;
 
   const unlockedSkillIds = new Set<string>();
   for (const lvl of JOB_LEVELS) {
-    if (results[lvl.id]) lvl.skills.forEach((s) => unlockedSkillIds.add(s));
+    if (unlockedMode || results[lvl.id]) lvl.skills.forEach((s) => unlockedSkillIds.add(s));
   }
   const unlockedSkillCount = unlockedSkillIds.size;
   const skillPct = Math.round((unlockedSkillCount / TOTAL_UNLOCKABLE_SKILLS) * 100);

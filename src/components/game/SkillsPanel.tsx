@@ -28,13 +28,14 @@ const CATEGORY_ORDER: SkillCategory[] = [
 
 export default function SkillsPanel() {
   const results = useGameStore((s) => s.results);
+  const unlockedMode = useGameStore((s) => s.unlockedMode);
   const lang = useLang();
   const tt = useT();
 
-  // Compute unlocked skill set
+  // Compute unlocked skill set — when unlockedMode is on, everything is unlocked
   const unlocked = new Set<string>();
   for (const lvl of JOB_LEVELS) {
-    if (results[lvl.id]) lvl.skills.forEach((s) => unlocked.add(s));
+    if (unlockedMode || results[lvl.id]) lvl.skills.forEach((s) => unlocked.add(s));
   }
 
   const unlockedCount = unlocked.size;

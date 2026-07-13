@@ -52,17 +52,18 @@ export default function FinalCV() {
   const results = useGameStore((s) => s.results);
   const xp = useGameStore((s) => s.xp);
   const setScreen = useGameStore((s) => s.setScreen);
+  const unlockedMode = useGameStore((s) => s.unlockedMode);
   const lang = useLang();
   const tt = useT();
 
-  // unlocked skills
+  // unlocked skills — when unlockedMode is on, everything is unlocked
   const unlocked = new Set<string>();
   for (const lvl of JOB_LEVELS) {
-    if (results[lvl.id]) lvl.skills.forEach((s) => unlocked.add(s));
+    if (unlockedMode || results[lvl.id]) lvl.skills.forEach((s) => unlocked.add(s));
   }
   const unlockedCount = unlocked.size;
-  const completedCount = Object.keys(results).length;
-  const totalStars = Object.values(results).reduce((sum, r) => sum + r.stars, 0);
+  const completedCount = unlockedMode ? JOB_LEVELS.length : Object.keys(results).length;
+  const totalStars = unlockedMode ? JOB_LEVELS.length * 3 : Object.values(results).reduce((sum, r) => sum + r.stars, 0);
   const maxStars = JOB_LEVELS.length * 3;
 
   const handlePrint = () => {
@@ -243,7 +244,7 @@ export default function FinalCV() {
           </h2>
           {JOB_LEVELS.map((level) => {
             const result = results[level.id];
-            const isUnlocked = !!result;
+            const isUnlocked = unlockedMode || !!result;
             return (
               <motion.div
                 key={level.id}
@@ -264,7 +265,7 @@ export default function FinalCV() {
                         {level.role[lang]}
                       </h3>
                       {!isUnlocked && <Lock className="h-3 w-3 text-emerald-500/50" />}
-                      {isUnlocked && (
+                      {isUnlocked && result && (
                         <div className="flex items-center gap-0.5">
                           {[1, 2, 3].map((s) => (
                             <Star
@@ -381,6 +382,7 @@ export default function FinalCV() {
             completedCount={completedCount}
             totalStars={totalStars}
             xp={xp}
+            unlockedMode={unlockedMode}
           />
         </TabsContent>
       </Tabs>
@@ -471,25 +473,27 @@ function AchievementsSection({
   completedCount,
   totalStars,
   xp,
+  unlockedMode,
 }: {
   unlockedCount: number;
   completedCount: number;
   totalStars: number;
   xp: number;
+  unlockedMode: boolean;
 }) {
   const lang = useLang();
   const tt = useT();
   const lvl8Done = useGameStore((s) => !!s.results['lvl-8']);
   const achievements = [
-    { id: 'first-blood', key: 'ach.first', unlocked: completedCount >= 1, icon: '🎫' },
-    { id: 'halfway', key: 'ach.half', unlocked: completedCount >= 4, icon: '⚖️' },
-    { id: 'sysadmin', key: 'ach.sysadmin', unlocked: completedCount >= JOB_LEVELS.length, icon: '🛡️' },
-    { id: 'skill-collector', key: 'ach.collector', unlocked: unlockedCount >= 35, icon: '⚙️' },
-    { id: 'fullstack', key: 'ach.fullstack', unlocked: unlockedCount >= TOTAL_UNLOCKABLE_SKILLS, icon: '🌟' },
-    { id: 'three-stars', key: 'ach.perfect', unlocked: totalStars >= 18, icon: '⭐' },
-    { id: 'xp-1k', key: 'ach.vet', unlocked: xp >= 1000, icon: '🏆' },
-    { id: 'xp-2k', key: 'ach.legend', unlocked: xp >= 2000, icon: '👑' },
-    { id: 'prompt', key: 'ach.prompt', unlocked: lvl8Done, icon: '🤖' },
+    { id: 'first-blood', key: 'ach.first', unlocked: unlockedMode || completedCount >= 1, icon: '🎫' },
+    { id: 'halfway', key: 'ach.half', unlocked: unlockedMode || completedCount >= 4, icon: '⚖️' },
+    { id: 'sysadmin', key: 'ach.sysadmin', unlocked: unlockedMode || completedCount >= JOB_LEVELS.length, icon: '🛡️' },
+    { id: 'skill-collector', key: 'ach.collector', unlocked: unlockedMode || unlockedCount >= 35, icon: '⚙️' },
+    { id: 'fullstack', key: 'ach.fullstack', unlocked: unlockedMode || unlockedCount >= TOTAL_UNLOCKABLE_SKILLS, icon: '🌟' },
+    { id: 'three-stars', key: 'ach.perfect', unlocked: unlockedMode || totalStars >= 18, icon: '⭐' },
+    { id: 'xp-1k', key: 'ach.vet', unlocked: unlockedMode || xp >= 1000, icon: '🏆' },
+    { id: 'xp-2k', key: 'ach.legend', unlocked: unlockedMode || xp >= 2000, icon: '👑' },
+    { id: 'prompt', key: 'ach.prompt', unlocked: unlockedMode || lvl8Done, icon: '🤖' },
   ];
 
   return (
