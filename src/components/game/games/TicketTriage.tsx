@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, Mail, Phone, Heart, Clock } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
 import { useLang, useT } from '@/store/game-store';
+import { sfx, initAudio } from '@/lib/sound';
 
 interface Ticket {
   id: number;
@@ -160,6 +161,8 @@ export default function TicketTriage({ onScore }: MiniGameProps) {
   }, [timeLeft, lives, end]);
 
   const handleClick = (ticket: Ticket) => {
+    initAudio();
+    sfx.ticketHit();
     const pts = ticket.priority === 'high' ? 3 : ticket.priority === 'med' ? 2 : 1;
     setScore((s) => s + pts);
     setTickets((prev) => prev.filter((t) => t.id !== ticket.id));

@@ -18,7 +18,7 @@ export const UI: Dict = {
   // Nav
   'nav.map': { es: 'Mapa', en: 'Map' },
   'nav.cv': { es: 'CV', en: 'CV' },
-  'nav.reset': { es: 'Reset', en: 'Reset' },
+  'nav.reset': { es: 'Reiniciar', en: 'Reset' },
   'nav.exit': { es: 'Salir', en: 'Exit' },
 
   // Work modes
@@ -28,7 +28,7 @@ export const UI: Dict = {
 
   // StatusBar
   'status.career': { es: 'CARRERA', en: 'CAREER' },
-  'status.skills': { es: 'SKILLS', en: 'SKILLS' },
+  'status.skills': { es: 'HABILIDADES', en: 'SKILLS' },
 
   // CareerMap
   'map.badge': { es: 'CARRERA INTERACTIVA · 2014 → 2026', en: 'INTERACTIVE CAREER · 2014 → 2026' },
@@ -61,7 +61,7 @@ export const UI: Dict = {
 
   // Boot
   'boot.welcome': { es: 'Bienvenido,', en: 'Welcome,' },
-  'boot.recruit': { es: 'recruit', en: 'recruit' },
+  'boot.recruit': { es: 'recluta', en: 'recruit' },
   'boot.intro': { es: 'Vas a recorrer 10+ años de carrera de', en: "You'll explore 10+ years of" },
   'boot.start': { es: 'INICIAR MISIÓN', en: 'START MISSION' },
   'boot.tip': { es: 'Tip: cada nivel desbloquea habilidades reales del CV.', en: 'Tip: each level unlocks real CV skills.' },
@@ -72,7 +72,7 @@ export const UI: Dict = {
     es: 'Completa niveles para desbloquear cada habilidad del CV.',
     en: 'Complete levels to unlock each CV skill.',
   },
-  'skills.unlocked': { es: 'SKILLS UNLOCKED', en: 'SKILLS UNLOCKED' },
+  'skills.unlocked': { es: 'HABILIDADES DESBLOQUEADAS', en: 'SKILLS UNLOCKED' },
   'skills.hint': {
     es: 'Completa el primer nivel para empezar a desbloquear habilidades.',
     en: 'Complete the first level to start unlocking skills.',
@@ -113,7 +113,7 @@ export const UI: Dict = {
   'hud.placed': { es: 'COLOCADOS', en: 'PLACED' },
   'hud.errors': { es: 'ERRORES', en: 'ERRORS' },
   'hud.bugs': { es: 'BUGS', en: 'BUGS' },
-  'hud.falses': { es: 'FALSOS', en: 'FALSE' },
+  'hud.falses': { es: 'FALSOS', en: 'WRONG' },
   'hud.migrated': { es: 'MIGRADAS', en: 'MIGRATED' },
   'hud.repaired': { es: 'REPARADAS', en: 'REPAIRED' },
   'hud.uptime': { es: 'UPTIME', en: 'UPTIME' },
@@ -156,7 +156,7 @@ export const UI: Dict = {
     en: 'Select a tool, then click the pipeline stage where it belongs.',
   },
   'pb.placing': { es: 'Colocando', en: 'Placing' },
-  'pb.clickstage': { es: '... click en una etapa', en: '... click a stage' },
+  'pb.clickstage': { es: '... click en una etapa', en: '... click on a stage' },
   'pb.tools': { es: 'HERRAMIENTAS DISPONIBLES', en: 'AVAILABLE TOOLS' },
   'pb.allplaced': { es: '✓ Todas colocadas', en: '✓ All placed' },
   'pb.empty': { es: 'vacío', en: 'empty' },
@@ -199,7 +199,7 @@ export const UI: Dict = {
   // FinalCV
   'cv.objective': { es: 'OBJETIVO PROFESIONAL', en: 'CAREER OBJECTIVE' },
   'cv.experience': { es: 'Experiencia', en: 'Experience' },
-  'cv.skills': { es: 'Skills', en: 'Skills' },
+  'cv.skills': { es: 'Habilidades', en: 'Skills' },
   'cv.education': { es: 'Educación', en: 'Education' },
   'cv.achievements': { es: 'Logros', en: 'Achievements' },
   'cv.exp.header': { es: 'EXPERIENCIA LABORAL', en: 'WORK EXPERIENCE' },
@@ -224,6 +224,7 @@ export const UI: Dict = {
   },
   'cv.levels.done': { es: 'niveles completados', en: 'levels completed' },
   'cv.years': { es: 'años', en: 'years' },
+  'cv.year': { es: 'año', en: 'year' },
 
   // Achievements
   'ach.first': { es: 'Primer Ticket', en: 'First Ticket' },
@@ -232,7 +233,7 @@ export const UI: Dict = {
   'ach.half.desc': { es: 'Completa 4 niveles', en: 'Complete 4 levels' },
   'ach.sysadmin': { es: 'Sysadmin Real', en: 'True Sysadmin' },
   'ach.sysadmin.desc': { es: 'Completa todos los niveles', en: 'Complete all levels' },
-  'ach.collector': { es: 'Coleccionista de Skills', en: 'Skill Collector' },
+  'ach.collector': { es: 'Coleccionista de Habilidades', en: 'Skill Collector' },
   'ach.collector.desc': { es: 'Desbloquea 35+ habilidades', en: 'Unlock 35+ skills' },
   'ach.fullstack': { es: 'Stack Completo', en: 'Full Stack' },
   'ach.fullstack.desc': { es: 'Desbloquea TODAS las habilidades', en: 'Unlock ALL skills' },
@@ -253,6 +254,33 @@ export const UI: Dict = {
   },
   'reset.cancel': { es: 'Cancelar', en: 'Cancel' },
   'reset.confirm': { es: 'Sí, reiniciar', en: 'Yes, reset' },
+
+  // Nav — docs
+  'nav.docs': { es: 'Guía', en: 'Guide' },
+
+  // Documentation screen
+  'docs.title': { es: 'Cómo Jugar', en: 'How to Play' },
+  'docs.subtitle': {
+    es: 'Aprende cómo funciona cada nivel y su referencia al rol real del CV.',
+    en: 'Learn how each level works and its reference to the real CV role.',
+  },
+  'docs.back': { es: 'Volver al Mapa', en: 'Back to Map' },
+  'docs.howto': { es: 'Cómo Jugar', en: 'How to Play' },
+  'docs.objective': { es: 'Objetivo', en: 'Objective' },
+  'docs.role': { es: 'Rol de Referencia', en: 'Reference Role' },
+  'docs.controls': { es: 'Controles', en: 'Controls' },
+  'docs.click': { es: 'Click del ratón', en: 'Mouse click' },
+  'docs.tap': { es: 'Tap en pantalla', en: 'Tap on screen' },
+  'docs.scoring': { es: 'Puntuación', en: 'Scoring' },
+  'docs.screenshot': { es: 'Captura del Juego', en: 'Game Screenshot' },
+  'docs.play': { es: 'Jugar este Nivel', en: 'Play this Level' },
+  'docs.select': { es: 'Selecciona un nivel para ver la guía', en: 'Select a level to see the guide' },
+  'docs.level': { es: 'Nivel', en: 'Level' },
+  'docs.levels': { es: 'Niveles', en: 'Levels' },
+  'docs.game': { es: 'Juego', en: 'Game' },
+  'docs.zoom': { es: 'CLICK PARA AMPLIAR', en: 'CLICK TO ZOOM' },
+  'docs.prev': { es: 'ANT', en: 'PREV' },
+  'docs.next': { es: 'SIG', en: 'NEXT' },
 };
 
 export function t(lang: Lang, key: string): string {

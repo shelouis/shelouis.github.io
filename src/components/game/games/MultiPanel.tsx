@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, Layers } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
 import { useLang, useT } from '@/store/game-store';
+import { sfx, initAudio } from '@/lib/sound';
 
 type PanelType = 'cpanel' | 'directadmin' | 'plesk' | 'vestapanel';
 
@@ -65,12 +66,15 @@ export default function MultiPanel({ onScore }: MiniGameProps) {
 
   const handleChoice = (panel: PanelType, e: React.MouseEvent) => {
     if (!current || feedback) return;
+    initAudio();
     const ok = panel === current.panel;
     if (ok) {
+      sfx.panelCorrect();
       setScore((s) => s + 1);
       setDone((d) => d + 1);
       setFeedback({ ok: true, panel });
     } else {
+      sfx.error();
       setWrong((w) => w + 1);
       setFeedback({ ok: false, panel });
     }

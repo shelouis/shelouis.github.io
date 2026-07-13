@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Bug, Check, X, Code2, Zap } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
 import { useLang, useT } from '@/store/game-store';
+import { sfx, initAudio } from '@/lib/sound';
 
 interface BugLine {
   code: string;
@@ -122,8 +123,10 @@ export default function BugHunter({ onScore }: MiniGameProps) {
     const line = current.lines[lineIdx];
     const lineKey = `${current.id}-${lineIdx}`;
     if (clickedLines.has(lineKey as unknown as number)) return;
+    initAudio();
 
     if (line.isBug && line.bug) {
+      sfx.bugFound();
       setFoundBugs((b) => b + 1);
       setClickedLines((prev) => new Set(prev).add(lineKey as unknown as number));
       setFeedback({ lineKey, ok: true });
@@ -143,13 +146,14 @@ export default function BugHunter({ onScore }: MiniGameProps) {
             id,
             x: rect.left - parent.left + rect.width / 2,
             y: rect.top - parent.top,
-            text: '+1 Bug',
+            text: lang === 'es' ? '+1 Bug' : '+1 Bug',
             color: 'text-emerald-300',
           },
         ]);
         setTimeout(() => setFloats((f) => f.filter((fl) => fl.id !== id)), 800);
       }
     } else {
+      sfx.error();
       setWrongClicks((w) => w + 1);
       setFeedback({ lineKey, ok: false });
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -229,7 +233,7 @@ export default function BugHunter({ onScore }: MiniGameProps) {
           </div>
           <span className="font-mono-game text-[10px] text-emerald-400/60 ml-2">{current.file}</span>
           <span className="ml-auto font-mono-game text-[10px] text-emerald-500/60">
-            SNIPPET {snippetIdx + 1}/{SNIPPETS.length}
+            {lang === 'es' ? 'SNIPPET' : 'SNIPPET'} {snippetIdx + 1}/{SNIPPETS.length}
           </span>
         </div>
 

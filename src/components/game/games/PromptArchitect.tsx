@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, Sparkles, Brain, Wand2, ChevronRight } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
 import { useLang, useT } from '@/store/game-store';
+import { sfx, initAudio } from '@/lib/sound';
 
 type ComponentCategory = 'role' | 'context' | 'instruction' | 'constraint' | 'format';
 
@@ -158,6 +159,7 @@ export default function PromptArchitect({ onScore }: MiniGameProps) {
 
   const handleValidate = () => {
     if (validated || selected.size === 0) return;
+    initAudio();
     const correctIds = current.correct;
     const correctSelected = [...selected].filter((id) => correctIds.includes(id)).length;
     const wrongSelected = [...selected].filter((id) => !correctIds.includes(id)).length;
@@ -165,6 +167,12 @@ export default function PromptArchitect({ onScore }: MiniGameProps) {
     setScore((s) => s + Math.max(0, points));
     setResultData({ correct: correctSelected, wrong: wrongSelected });
     setValidated(true);
+    // play sound after calculating points: success if at least some correct, else error
+    if (correctSelected > 0) {
+      sfx.promptValid();
+    } else {
+      sfx.error();
+    }
   };
 
   const handleNext = () => {

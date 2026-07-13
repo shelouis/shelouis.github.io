@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Server, ArrowRight, Gauge, Users, Database } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
 import { useLang, useT } from '@/store/game-store';
+import { sfx, initAudio } from '@/lib/sound';
 
 interface Account {
   id: number;
@@ -116,6 +117,8 @@ export default function Migration({ onScore }: MiniGameProps) {
       // block: too much load
       return;
     }
+    initAudio();
+    sfx.accountMigrated();
     setAccounts((accs) => accs.map((a) => (a.id === account.id ? { ...a, status: 'migrating' as const } : a)));
     setMigrating((prev) => [...prev, account.id]);
   };
@@ -178,7 +181,7 @@ export default function Migration({ onScore }: MiniGameProps) {
               style={{ width: `${Math.min(100, (load / 60) * 100)}%` }}
             />
             {/* threshold marker */}
-            <div className="absolute top-0 bottom-0 w-px bg-amber-400" style={{ left: '50%' }} title="safe threshold" />
+            <div className="absolute top-0 bottom-0 w-px bg-amber-400" style={{ left: '50%' }} title={lang === 'es' ? 'límite seguro' : 'safe threshold'} />
           </div>
           <div className="font-mono-game text-[9px] text-amber-500/60 mt-0.5">{tt('mg.safe')} 30</div>
         </div>

@@ -151,14 +151,14 @@ export default function FinalCV() {
               <div className="font-mono-game text-lg font-bold text-emerald-300">
                 {totalStars}/{maxStars}
               </div>
-              <div className="font-mono-game text-[9px] text-emerald-500/70">STARS</div>
+              <div className="font-mono-game text-[9px] text-emerald-500/70">{lang === 'es' ? 'ESTRELLAS' : 'STARS'}</div>
             </div>
             <div className="rounded-md border border-cyan-500/40 bg-cyan-500/10 px-3 py-2 text-center min-w-[70px]">
               <Check className="h-4 w-4 text-cyan-400 mx-auto mb-1" />
               <div className="font-mono-game text-lg font-bold text-cyan-300">
                 {unlockedCount}/{TOTAL_UNLOCKABLE_SKILLS}
               </div>
-              <div className="font-mono-game text-[9px] text-cyan-500/70">SKILLS</div>
+              <div className="font-mono-game text-[9px] text-emerald-500/70">{tt('status.skills')}</div>
             </div>
           </div>
         </div>
@@ -292,7 +292,7 @@ export default function FinalCV() {
                       <Calendar className="h-3 w-3" /> {level.period[lang]}
                     </div>
                     <div className="font-mono-game text-[10px] text-emerald-500/50 mt-0.5">
-                      {level.durationYears} {tt('cv.years')}
+                      {level.durationYears} {level.durationYears === 1 ? tt('cv.year') : tt('cv.years')}
                     </div>
                   </div>
                 </div>

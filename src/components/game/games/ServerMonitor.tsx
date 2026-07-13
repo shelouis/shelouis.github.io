@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Server, AlertTriangle, Zap, Activity } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
 import { useLang, useT } from '@/store/game-store';
+import { sfx, initAudio } from '@/lib/sound';
 
 type Status = 'ok' | 'warn' | 'critical' | 'fixing' | 'fixed';
 
@@ -103,6 +104,8 @@ export default function ServerMonitor({ onScore }: MiniGameProps) {
 
   const handleClick = (server: ServerNode, e: React.MouseEvent) => {
     if (server.status === 'ok' || server.status === 'fixing' || server.status === 'fixed') return;
+    initAudio();
+    sfx.serverRepair();
     const pts = server.status === 'critical' ? 1 : 2;
     setScore((s) => s + pts);
     setServers((prev) =>

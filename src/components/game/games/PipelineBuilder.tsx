@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GitBranch, Check, X, Workflow, ArrowRight } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
 import { useLang, useT } from '@/store/game-store';
+import { sfx, initAudio } from '@/lib/sound';
 
 type Stage = 'source' | 'build' | 'test' | 'deploy';
 
@@ -57,12 +58,15 @@ export default function PipelineBuilder({ onScore }: MiniGameProps) {
     if (feedback) return;
     // only allow if tool is still available
     if (!available.find((t) => t.id === tool.id)) return;
+    initAudio();
     const ok = tool.stage === stage;
     if (ok) {
+      sfx.toolPlace();
       setScore((s) => s + 1);
       setAvailable((prev) => prev.filter((t) => t.id !== tool.id));
       setPlaced((prev) => ({ ...prev, [stage]: [...prev[stage], tool] }));
     } else {
+      sfx.error();
       setWrong((w) => w + 1);
     }
     setFeedback({ toolId: tool.id, stage, ok });

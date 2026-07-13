@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { User, Check, X, Users } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
 import { useLang, useT } from '@/store/game-store';
+import { sfx, initAudio } from '@/lib/sound';
 
 type Specialty = 'cpanel' | 'network' | 'email' | 'ssl';
 
@@ -69,20 +70,20 @@ const AGENTS: Agent[] = [
 ];
 
 const TICKETS_POOL: { subject: { es: string; en: string }; specialty: Specialty }[] = [
-  { subject: { es: 'cPanel no carga el dominio', en: 'cPanel wont load domain' }, specialty: 'cpanel' },
+  { subject: { es: 'cPanel no carga el dominio', en: "cPanel won't load domain" }, specialty: 'cpanel' },
   { subject: { es: 'Crear cuenta reseller WHM', en: 'Create WHM reseller account' }, specialty: 'cpanel' },
-  { subject: { es: 'Backup conjet de cuenta', en: 'Account backup failed' }, specialty: 'cpanel' },
+  { subject: { es: 'Backup fallido de cuenta', en: 'Account backup failed' }, specialty: 'cpanel' },
   { subject: { es: 'Configurar VPN para sede', en: 'Configure VPN for office' }, specialty: 'network' },
   { subject: { es: 'DNS no propaga registro A', en: 'DNS not propagating A record' }, specialty: 'network' },
   { subject: { es: 'SMTP rebotado por IP en blacklist', en: 'SMTP bounced by blacklisted IP' }, specialty: 'network' },
   { subject: { es: 'Campaña Email Marketing 50k', en: 'Email Marketing campaign 50k' }, specialty: 'email' },
   { subject: { es: 'SMS masivo no envía', en: 'Bulk SMS not sending' }, specialty: 'email' },
-  { subject: { es: 'Buzel de correo lleno', en: 'Mailbox full' }, specialty: 'email' },
+  { subject: { es: 'Buzón de correo lleno', en: 'Mailbox full' }, specialty: 'email' },
   { subject: { es: "Instalar certificado SSL Let's Encrypt", en: "Install SSL Let's Encrypt cert" }, specialty: 'ssl' },
   { subject: { es: 'Renovar SSL wildcard', en: 'Renew wildcard SSL' }, specialty: 'ssl' },
   { subject: { es: 'Registrar dominio .com nuevo', en: 'Register new .com domain' }, specialty: 'ssl' },
   { subject: { es: 'WordPress en cPanel caído', en: 'WordPress on cPanel down' }, specialty: 'cpanel' },
-  { subject: { es: 'Configurar tunel GRE', en: 'Configure GRE tunnel' }, specialty: 'network' },
+  { subject: { es: 'Configurar túnel GRE', en: 'Configure GRE tunnel' }, specialty: 'network' },
   { subject: { es: 'Auto-responder para info@', en: 'Auto-responder for info@' }, specialty: 'email' },
   { subject: { es: 'Migrar dominio entre registradores', en: 'Migrate domain between registrars' }, specialty: 'ssl' },
 ];
@@ -108,10 +109,13 @@ export default function TeamRouter({ onScore }: MiniGameProps) {
 
   const handleChoice = (agent: Agent, e: React.MouseEvent) => {
     if (!current || feedback) return;
+    initAudio();
     const ok = agent.specialty === current.specialty;
     if (ok) {
+      sfx.ticketAssign();
       setScore((s) => s + 1);
     } else {
+      sfx.error();
       setWrong((w) => w + 1);
     }
     setFeedback({ ok, agentId: agent.id });

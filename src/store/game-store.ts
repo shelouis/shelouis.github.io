@@ -85,6 +85,17 @@ export const useGameStore = create<GameState>()(
         lang: s.lang,
         unlockedMode: s.unlockedMode,
       }),
+      merge: (persistedState, currentState) => {
+        // Merge persisted state but keep current screen/currentLevelId (transient state)
+        const persisted = (persistedState as Partial<GameState>) || {};
+        return {
+          ...currentState,
+          ...persisted,
+          // Always keep transient state from current (don't overwrite with persisted)
+          screen: currentState.screen,
+          currentLevelId: currentState.currentLevelId,
+        };
+      },
     },
   ),
 );

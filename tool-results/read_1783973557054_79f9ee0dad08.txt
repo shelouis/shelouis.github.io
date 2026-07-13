@@ -1,0 +1,630 @@
+     1→import type { JobLevel, Skill, SkillCategory, WorkMode } from './types';
+     2→import type { Lang } from './i18n';
+     3→
+     4→// Bilingual text helper type
+     5→type Bi = { es: string; en: string };
+     6→
+     7→// ────────────────────────────────────────────────────────────────────────────
+     8→// SKILLS — full tech stack from José's CV (bilingual)
+     9→// ────────────────────────────────────────────────────────────────────────────
+    10→export const SKILLS: (Skill & { name: Bi })[] = [
+    11→  // OS & Servers
+    12→  { id: 'linux', name: { es: 'Linux (Ubuntu/CentOS/Debian)', en: 'Linux (Ubuntu/CentOS/Debian)' }, category: 'os' },
+    13→  { id: 'windows-server', name: { es: 'Windows Server', en: 'Windows Server' }, category: 'os' },
+    14→  { id: 'sysadmin', name: { es: 'Administración de Servidores', en: 'Server Administration' }, category: 'os' },
+    15→  { id: 'bash', name: { es: 'Bash Scripting', en: 'Bash Scripting' }, category: 'os' },
+    16→  { id: 'cronjobs', name: { es: 'Cronjobs', en: 'Cronjobs' }, category: 'os' },
+    17→  // Cloud & Hosting
+    18→  { id: 'aws', name: { es: 'AWS (EC2, S3, Route53)', en: 'AWS (EC2, S3, Route53)' }, category: 'cloud' },
+    19→  { id: 'digitalocean', name: { es: 'DigitalOcean', en: 'DigitalOcean' }, category: 'cloud' },
+    20→  { id: 'cpanel', name: { es: 'cPanel', en: 'cPanel' }, category: 'cloud' },
+    21→  { id: 'directadmin', name: { es: 'DirectAdmin', en: 'DirectAdmin' }, category: 'cloud' },
+    22→  { id: 'plesk', name: { es: 'Plesk', en: 'Plesk' }, category: 'cloud' },
+    23→  { id: 'vestapanel', name: { es: 'VestaPanel', en: 'VestaPanel' }, category: 'cloud' },
+    24→  { id: 'laravel-forge', name: { es: 'Laravel Forge', en: 'Laravel Forge' }, category: 'cloud' },
+    25→  // DevOps & CI/CD
+    26→  { id: 'docker', name: { es: 'Docker', en: 'Docker' }, category: 'devops' },
+    27→  { id: 'docker-compose', name: { es: 'Docker Compose', en: 'Docker Compose' }, category: 'devops' },
+    28→  { id: 'jenkins', name: { es: 'Jenkins', en: 'Jenkins' }, category: 'devops' },
+    29→  { id: 'bitbucket-pipelines', name: { es: 'Bitbucket Pipelines', en: 'Bitbucket Pipelines' }, category: 'devops' },
+    30→  { id: 'cicd', name: { es: 'CI/CD Pipelines', en: 'CI/CD Pipelines' }, category: 'devops' },
+    31→  { id: 'release-management', name: { es: 'Release Management', en: 'Release Management' }, category: 'devops' },
+    32→  { id: 'automation-flows', name: { es: 'Automatización de Flujos', en: 'Workflow Automation' }, category: 'devops' },
+    33→  // Backend Dev
+    34→  { id: 'php', name: { es: 'PHP', en: 'PHP' }, category: 'backend' },
+    35→  { id: 'laravel', name: { es: 'Laravel', en: 'Laravel' }, category: 'backend' },
+    36→  { id: 'mysql', name: { es: 'MySQL', en: 'MySQL' }, category: 'backend' },
+    37→  { id: 'rest-api', name: { es: 'APIs REST', en: 'REST APIs' }, category: 'backend' },
+    38→  // Virtualization
+    39→  { id: 'hyperv', name: { es: 'HyperV', en: 'HyperV' }, category: 'virtualization' },
+    40→  { id: 'proxmox', name: { es: 'Proxmox (KVM)', en: 'Proxmox (KVM)' }, category: 'virtualization' },
+    41→  { id: 'openvz', name: { es: 'OpenVZ', en: 'OpenVZ' }, category: 'virtualization' },
+    42→  // Monitoring
+    43→  { id: 'nagios', name: { es: 'Nagios', en: 'Nagios' }, category: 'monitoring' },
+    44→  { id: 'zabbix', name: { es: 'Zabbix', en: 'Zabbix' }, category: 'monitoring' },
+    45→  { id: 'centreon', name: { es: 'Centreon', en: 'Centreon' }, category: 'monitoring' },
+    46→  // Networks
+    47→  { id: 'dns', name: { es: 'DNS', en: 'DNS' }, category: 'network' },
+    48→  { id: 'tcpip', name: { es: 'TCP/IP', en: 'TCP/IP' }, category: 'network' },
+    49→  { id: 'http', name: { es: 'HTTP/HTTPS', en: 'HTTP/HTTPS' }, category: 'network' },
+    50→  { id: 'smtp', name: { es: 'SMTP', en: 'SMTP' }, category: 'network' },
+    51→  { id: 'ssl-tls', name: { es: 'SSL/TLS', en: 'SSL/TLS' }, category: 'network' },
+    52→  { id: 'vpn', name: { es: 'VPN', en: 'VPN' }, category: 'network' },
+    53→  // APIs & Dev Tools
+    54→  { id: 'postman', name: { es: 'Postman', en: 'Postman' }, category: 'tools' },
+    55→  { id: 'swagger', name: { es: 'Swagger', en: 'Swagger' }, category: 'tools' },
+    56→  { id: 'git', name: { es: 'Git', en: 'Git' }, category: 'tools' },
+    57→  { id: 'bitbucket', name: { es: 'Bitbucket', en: 'Bitbucket' }, category: 'tools' },
+    58→  { id: 'prompt-engineering', name: { es: 'Prompt Engineering', en: 'Prompt Engineering' }, category: 'tools' },
+    59→  { id: 'llm', name: { es: 'LLMs (Grandes Modelos de Lenguaje)', en: 'LLMs (Large Language Models)' }, category: 'tools' },
+    60→  { id: 'ai-qa', name: { es: 'QA Asistido por IA', en: 'AI-Assisted QA' }, category: 'tools' },
+    61→  // Tickets & Management
+    62→  { id: 'whmcs', name: { es: 'WHMCS', en: 'WHMCS' }, category: 'tickets' },
+    63→  { id: 'kayako', name: { es: 'Kayako', en: 'Kayako' }, category: 'tickets' },
+    64→  { id: 'jira', name: { es: 'Jira', en: 'Jira' }, category: 'tickets' },
+    65→  { id: 'intercom', name: { es: 'Intercom', en: 'Intercom' }, category: 'tickets' },
+    66→  { id: 'installatron', name: { es: 'Installatron Manager', en: 'Installatron Manager' }, category: 'tickets' },
+    67→  { id: 'leadership', name: { es: 'Liderazgo de Equipo', en: 'Team Leadership' }, category: 'tickets' },
+    68→  { id: 'documentation', name: { es: 'Documentación Técnica', en: 'Technical Documentation' }, category: 'tickets' },
+    69→  { id: 'change-management', name: { es: 'Gestión de Cambios', en: 'Change Management' }, category: 'tickets' },
+    70→  // Languages
+    71→  { id: 'spanish', name: { es: 'Español (Nativo)', en: 'Spanish (Native)' }, category: 'languages' },
+    72→  { id: 'english-b1', name: { es: 'Inglés B1 Certificado', en: 'English B1 Certified' }, category: 'languages' },
+    73→];
+    74→
+    75→export const CATEGORY_LABELS: Record<SkillCategory, Bi> = {
+    76→  os: { es: 'OS & Servidores', en: 'OS & Servers' },
+    77→  cloud: { es: 'Cloud & Hosting', en: 'Cloud & Hosting' },
+    78→  devops: { es: 'DevOps & CI/CD', en: 'DevOps & CI/CD' },
+    79→  backend: { es: 'Desarrollo Backend', en: 'Backend Development' },
+    80→  virtualization: { es: 'Virtualización', en: 'Virtualization' },
+    81→  monitoring: { es: 'Monitorización', en: 'Monitoring' },
+    82→  network: { es: 'Redes & Protocolos', en: 'Networks & Protocols' },
+    83→  tools: { es: 'APIs & Dev Tools', en: 'APIs & Dev Tools' },
+    84→  tickets: { es: 'Gestión & Tickets', en: 'Management & Tickets' },
+    85→  languages: { es: 'Idiomas', en: 'Languages' },
+    86→};
+    87→
+    88→export const CATEGORY_ICONS: Record<SkillCategory, string> = {
+    89→  os: '🖥️',
+    90→  cloud: '☁️',
+    91→  devops: '⚙️',
+    92→  backend: '💻',
+    93→  virtualization: '🗂️',
+    94→  monitoring: '📊',
+    95→  network: '🌐',
+    96→  tools: '🔧',
+    97→  tickets: '🎫',
+    98→  languages: '🗣️',
+    99→};
+   100→
+   101→// ────────────────────────────────────────────────────────────────────────────
+   102→// JOB LEVELS — one per role, in chronological order (career progression)
+   103→// ────────────────────────────────────────────────────────────────────────────
+   104→export const JOB_LEVELS: JobLevel[] = [
+   105→  {
+   106→    id: 'lvl-1',
+   107→    index: 1,
+   108→    company: 'VenezuelaHosting',
+   109→    role: { es: 'Atención al Cliente / Soporte L1', en: 'Customer Support / L1 Support' },
+   110→    location: { es: 'Venezuela', en: 'Venezuela' },
+   111→    mode: 'hybrid',
+   112→    period: { es: 'Sep 2014 — Feb 2016', en: 'Sep 2014 — Feb 2016' },
+   113→    startDate: '2014-09',
+   114→    endDate: '2016-02',
+   115→    durationYears: 1.4,
+   116→    summary: {
+   117→      es: 'Primer contacto con clientes de hosting compartido vía chat, ticket y VoIP. Auditorías de cuentas cPanel y mejoras en scripts de automatización Linux.',
+   118→      en: 'First contact with shared hosting customers via chat, ticket and VoIP. cPanel account audits and Linux automation script improvements.',
+   119→    },
+   120→    achievements: [
+   121→      {
+   122→        es: 'Soporte de primer contacto vía chat, ticket y VoIP',
+   123→        en: 'First-contact support via chat, ticket and VoIP',
+   124→      },
+   125→      {
+   126→        es: 'Auditoría de cuentas de hosting en servidores cPanel',
+   127→        en: 'Auditing of hosting accounts on cPanel servers',
+   128→      },
+   129→      {
+   130→        es: 'Implementación de mejoras en scripts de automatización Linux',
+   131→        en: 'Implemented improvements to Linux automation scripts',
+   132→      },
+   133→    ],
+   134→    skills: ['linux', 'cpanel', 'sysadmin', 'bash', 'whmcs', 'kayako', 'spanish'],
+   135→    gameId: 'ticket-triage',
+   136→    gameTitle: { es: 'Primer Contacto', en: 'First Contact' },
+   137→    gameDescription: {
+   138→      es: 'Los tickets de soporte llegan sin parar. Responde cada uno antes de que expire el SLA.',
+   139→      en: 'Support tickets keep coming. Answer each one before the SLA expires.',
+   140→    },
+   141→    gameGoal: 15,
+   142→    accent: 'emerald',
+   143→    howTo: [
+   144→      { es: 'Los tickets caen desde arriba en 3 canales: Chat, Email y VoIP.', en: 'Tickets fall from the top in 3 channels: Chat, Email and VoIP.' },
+   145→      { es: 'Haz click en cada ticket antes de que llegue a la línea roja de SLA.', en: 'Click each ticket before it reaches the red SLA line.' },
+   146→      { es: 'Los tickets rojos marcados URG valen +3, los ámbar +2, los verdes +1.', en: 'Red tickets marked URG are worth +3, amber +2, green +1.' },
+   147→      { es: 'Si un ticket llega al SLA, pierdes una vida. Tienes 3 vidas.', en: 'If a ticket reaches the SLA line, you lose a life. You have 3 lives.' },
+   148→      { es: 'Duración: 45 segundos. Meta: 15 puntos.', en: 'Duration: 45 seconds. Goal: 15 points.' },
+   149→    ],
+   150→    scoring: { es: '+3 urgente, +2 medio, +1 normal. Pierdes vidas si caen al SLA.', en: '+3 urgent, +2 medium, +1 normal. Lose lives if they reach SLA.' },
+   151→  },
+   152→  {
+   153→    id: 'lvl-2',
+   154→    index: 2,
+   155→    company: 'VenezuelaHosting',
+   156→    role: { es: 'Analista de Soporte Técnico L2', en: 'Technical Support Analyst L2' },
+   157→    location: { es: 'Venezuela', en: 'Venezuela' },
+   158→    mode: 'hybrid',
+   159→    period: { es: 'Feb 2016 — Oct 2018', en: 'Feb 2016 — Oct 2018' },
+   160→    startDate: '2016-02',
+   161→    endDate: '2018-10',
+   162→    durationYears: 2.7,
+   163→    summary: {
+   164→      es: 'Administré 7 servidores principales con +5,000 cuentas de clientes y 2 nodos OpenVZ con +200 VPS en Proxmox (KVM) y HyperV. Monitorización con Zabbix y gestión de Active Directory.',
+   165→      en: 'Managed 7 main servers with +5,000 customer accounts and 2 OpenVZ nodes with +200 VPS on Proxmox (KVM) and HyperV. Monitoring with Zabbix and Active Directory management.',
+   166→    },
+   167→    achievements: [
+   168→      {
+   169→        es: '7 servidores principales con +5,000 cuentas de clientes',
+   170→        en: '7 main servers with +5,000 customer accounts',
+   171→      },
+   172→      {
+   173→        es: '2 nodos OpenVZ con +200 VPS en Proxmox (KVM) y HyperV',
+   174→        en: '2 OpenVZ nodes with +200 VPS on Proxmox (KVM) and HyperV',
+   175→      },
+   176→      {
+   177→        es: 'Monitorización con Zabbix y administración de Active Directory/SharePoint',
+   178→        en: 'Monitoring with Zabbix and Active Directory/SharePoint administration',
+   179→      },
+   180→      {
+   181→        es: 'Migración de cuentas, SSL/TLS y resolución de bugs PHP sin downtime',
+   182→        en: 'Account migration, SSL/TLS and PHP bug resolution with zero downtime',
+   183→      },
+   184→    ],
+   185→    skills: ['zabbix', 'proxmox', 'hyperv', 'openvz', 'ssl-tls', 'php', 'whmcs', 'kayako'],
+   186→    gameId: 'server-monitor',
+   187→    gameTitle: { es: 'Vigilancia Proactiva', en: 'Proactive Watch' },
+   188→    gameDescription: {
+   189→      es: 'Una flota de servidores no duerme. Detecta y repara fallos antes de que el uptime caiga.',
+   190→      en: 'A server fleet never sleeps. Detect and fix failures before uptime drops.',
+   191→    },
+   192→    gameGoal: 20,
+   193→    accent: 'amber',
+   194→    howTo: [
+   195→      { es: 'Aparece un grid 3x3 con 9 servidores de la flota VenezuelaHosting.', en: 'A 3x3 grid appears with 9 servers from the VenezuelaHosting fleet.' },
+   196→      { es: 'Los servidores pasan de OK → WARN (ámbar) → CRIT (rojo) si no los reparas.', en: 'Servers go from OK → WARN (amber) → CRIT (red) if you do not fix them.' },
+   197→      { es: 'Haz click en un servidor WARN para repararlo (+2 puntos).', en: 'Click a WARN server to fix it (+2 points).' },
+   198→      { es: 'Si pasa a CRIT, solo vale +1 y empieza a bajar el uptime.', en: 'If it turns CRIT, it is only worth +1 and starts dropping uptime.' },
+   199→      { es: 'Mantén el uptime alto. Bonus de +uptime/5 al final. Duración: 45s.', en: 'Keep uptime high. Bonus of +uptime/5 at the end. Duration: 45s.' },
+   200→    ],
+   201→    scoring: { es: '+2 reparar en ámbar, +1 en rojo. Bonus por uptime al final.', en: '+2 fix in amber, +1 in red. Bonus for uptime at the end.' },
+   202→  },
+   203→  {
+   204→    id: 'lvl-3',
+   205→    index: 3,
+   206→    company: 'LatincCloud',
+   207→    role: { es: 'Analista de Soporte Técnico', en: 'Technical Support Analyst' },
+   208→    location: { es: 'Argentina', en: 'Argentina' },
+   209→    mode: 'remote',
+   210→    period: { es: 'Oct 2018 — Dic 2019', en: 'Oct 2018 — Dec 2019' },
+   211→    startDate: '2018-10',
+   212→    endDate: '2019-12',
+   213→    durationYears: 1.2,
+   214→    summary: {
+   215→      es: 'Administré +20 servidores prestando servicio a +20,000 clientes en cPanel, DirectAdmin, Plesk y VestaPanel. Configuración de protocolos TCP/IP, HTTP, DNS, SMTP y monitorización con Nagios, Zabbix y Centreon.',
+   216→      en: 'Managed +20 servers serving +20,000 customers on cPanel, DirectAdmin, Plesk and VestaPanel. Configured TCP/IP, HTTP, DNS, SMTP protocols and monitoring with Nagios, Zabbix and Centreon.',
+   217→    },
+   218→    achievements: [
+   219→      {
+   220→        es: '+20 servidores con +20,000 clientes activos',
+   221→        en: '+20 servers with +20,000 active customers',
+   222→      },
+   223→      {
+   224→        es: 'Administración multi-panel: cPanel, DirectAdmin, Plesk, VestaPanel',
+   225→        en: 'Multi-panel management: cPanel, DirectAdmin, Plesk, VestaPanel',
+   226→      },
+   227→      {
+   228→        es: 'Configuración de TCP/IP, HTTP, DNS, SMTP',
+   229→        en: 'Configuration of TCP/IP, HTTP, DNS, SMTP',
+   230→      },
+   231→      {
+   232→        es: 'Operación de Nagios, Zabbix y Centreon',
+   233→        en: 'Operation of Nagios, Zabbix and Centreon',
+   234→      },
+   235→      {
+   236→        es: 'Soporte técnico WordPress, PHP, Apache y Nginx',
+   237→        en: 'Technical support for WordPress, PHP, Apache and Nginx',
+   238→      },
+   239→    ],
+   240→    skills: ['cpanel', 'directadmin', 'plesk', 'vestapanel', 'nagios', 'zabbix', 'centreon', 'dns', 'tcpip', 'http', 'smtp'],
+   241→    gameId: 'multi-panel',
+   242→    gameTitle: { es: 'Multi-Panel Maestro', en: 'Multi-Panel Master' },
+   243→    gameDescription: {
+   244→      es: 'Cuatro paneles de control, miles de clientes. Asigna cada configuración al panel correcto.',
+   245→      en: 'Four control panels, thousands of customers. Assign each config to the right panel.',
+   246→    },
+   247→    gameGoal: 16,
+   248→    accent: 'cyan',
+   249→    howTo: [
+   250→      { es: 'Aparece una tarea de configuración (ej: “Crear cuenta de hosting”).', en: 'A config task appears (e.g. “Create hosting account”).' },
+   251→      { es: 'Debajo hay 4 paneles: cPanel, DirectAdmin, Plesk y VestaPanel.', en: 'Below are 4 panels: cPanel, DirectAdmin, Plesk and VestaPanel.' },
+   252→      { es: 'Haz click en el panel donde se ejecuta esa tarea.', en: 'Click the panel where that task is executed.' },
+   253→      { es: 'Cada acierto suma +1. Si fallas, suma un error.', en: 'Each correct answer scores +1. If you fail, it counts as an error.' },
+   254→      { es: '16 tareas en total. Máximo 5 errores. Meta: 16 aciertos.', en: '16 tasks total. Maximum 5 errors. Goal: 16 correct.' },
+   255→    ],
+   256→    scoring: { es: '+1 por tarea correcta. Falla 5 y se acaba.', en: '+1 per correct task. 5 errors and the game ends.' },
+   257→  },
+   258→  {
+   259→    id: 'lvl-4',
+   260→    index: 4,
+   261→    company: 'ADCLICHOSTING',
+   262→    role: { es: 'Gerente de Soporte Técnico (TSM)', en: 'Technical Support Manager (TSM)' },
+   263→    location: { es: 'Venezuela', en: 'Venezuela' },
+   264→    mode: 'hybrid',
+   265→    period: { es: 'Ene 2020 — Mar 2022', en: 'Jan 2020 — Mar 2022' },
+   266→    startDate: '2020-01',
+   267→    endDate: '2022-03',
+   268→    durationYears: 2.2,
+   269→    summary: {
+   270→      es: 'Lideré y capacité a analistas de soporte en administración de servidores Linux y cPanel. Implementé documentación que redujo el tiempo de resolución en un 80-90%. Gestión de SMS masivos, Email Marketing, VPN, SSL y dominios.',
+   271→      en: 'Led and trained support analysts on Linux server and cPanel administration. Implemented documentation that reduced resolution time by 80-90%. Managed bulk SMS, Email Marketing, VPN, SSL and domains.',
+   272→    },
+   273→    achievements: [
+   274→      {
+   275→        es: 'Liderazgo y capacitación de analistas de soporte',
+   276→        en: 'Leadership and training of support analysts',
+   277→      },
+   278→      {
+   279→        es: 'Reducción del 80-90% en tiempo de resolución de tickets',
+   280→        en: '80-90% reduction in ticket resolution time',
+   281→      },
+   282→      {
+   283→        es: 'Administración de infraestructura cPanel, RadioStreaming y hosting compartido',
+   284→        en: 'Management of cPanel infrastructure, RadioStreaming and shared hosting',
+   285→      },
+   286→      {
+   287→        es: 'Gestión de SMS masivos, Email Marketing, VPN, SSL y dominios',
+   288→        en: 'Management of bulk SMS, Email Marketing, VPN, SSL and domains',
+   289→      },
+   290→      {
+   291→        es: 'Centralización de tickets con WHMCS',
+   292→        en: 'Centralized ticket tracking with WHMCS',
+   293→      },
+   294→    ],
+   295→    skills: ['leadership', 'documentation', 'whmcs', 'cpanel', 'vpn', 'ssl-tls', 'dns', 'sysadmin'],
+   296→    gameId: 'team-router',
+   297→    gameTitle: { es: 'Comandante de Soporte', en: 'Support Commander' },
+   298→    gameDescription: {
+   299→      es: 'Tu equipo depende de ti. Asigna cada ticket al especialista correcto para maximizar la resolución.',
+   300→      en: 'Your team depends on you. Assign each ticket to the right specialist to maximize resolution.',
+   301→    },
+   302→    gameGoal: 12,
+   303→    accent: 'rose',
+   304→    howTo: [
+   305→      { es: 'Llega un ticket nuevo desde WHMCS con un asunto específico.', en: 'A new ticket arrives from WHMCS with a specific subject.' },
+   306→      { es: 'Tienes 4 analistas: Ana (cPanel), Luis (Redes), María (Email), Carlos (SSL).', en: 'You have 4 analysts: Ana (cPanel), Luis (Networks), María (Email), Carlos (SSL).' },
+   307→      { es: 'Lee el asunto del ticket y haz click en el especialista correcto.', en: 'Read the ticket subject and click the right specialist.' },
+   308→      { es: 'Cada asignación correcta suma +1. Las incorrectas suman errores.', en: 'Each correct assignment scores +1. Wrong ones count as errors.' },
+   309→      { es: '12 tickets en total. Máximo 4 errores. Meta: 12 aciertos.', en: '12 tickets total. Maximum 4 errors. Goal: 12 correct.' },
+   310→    ],
+   311→    scoring: { es: '+1 por ticket bien asignado. 4 errores y se acaba.', en: '+1 per correctly assigned ticket. 4 errors and the game ends.' },
+   312→  },
+   313→  {
+   314→    id: 'lvl-5',
+   315→    index: 5,
+   316→    company: 'RORAIMADEVS',
+   317→    role: { es: 'Administrador de Sistemas / Jr. DevOps', en: 'Systems Administrator / Jr. DevOps' },
+   318→    location: { es: 'USA', en: 'USA' },
+   319→    mode: 'remote',
+   320→    period: { es: 'May 2022 — May 2023', en: 'May 2022 — May 2023' },
+   321→    startDate: '2022-05',
+   322→    endDate: '2023-05',
+   323→    durationYears: 1.0,
+   324→    summary: {
+   325→      es: 'Automatización de despliegues con Docker y cronjobs (-60% en tiempo de configuración). Pipelines CI/CD con Jenkins y Bitbucket. Infraestructura cloud en DigitalOcean y AWS. Pruebas de APIs REST con Postman y Swagger.',
+   326→      en: 'Deployment automation with Docker and cronjobs (-60% in config time). CI/CD pipelines with Jenkins and Bitbucket. Cloud infrastructure on DigitalOcean and AWS. REST API testing with Postman and Swagger.',
+   327→    },
+   328→    achievements: [
+   329→      {
+   330→        es: 'Reducción del 60% en tiempo de configuración de entornos con Docker + cronjobs',
+   331→        en: '60% reduction in environment config time with Docker + cronjobs',
+   332→      },
+   333→      {
+   334→        es: 'Pipelines CI/CD con Jenkins y Bitbucket',
+   335→        en: 'CI/CD pipelines with Jenkins and Bitbucket',
+   336→      },
+   337→      {
+   338→        es: 'Gestión de infraestructura cloud en DigitalOcean y AWS',
+   339→        en: 'Cloud infrastructure management on DigitalOcean and AWS',
+   340→      },
+   341→      {
+   342→        es: 'Pruebas y documentación de APIs REST con Postman y Swagger',
+   343→        en: 'REST API testing and documentation with Postman and Swagger',
+   344→      },
+   345→    ],
+   346→    skills: ['docker', 'docker-compose', 'jenkins', 'cicd', 'bitbucket-pipelines', 'aws', 'digitalocean', 'cronjobs', 'postman', 'swagger', 'rest-api', 'git', 'bitbucket'],
+   347→    gameId: 'pipeline-builder',
+   348→    gameTitle: { es: 'Arquitecto DevOps', en: 'DevOps Architect' },
+   349→    gameDescription: {
+   350→      es: 'Construye el pipeline CI/CD perfecto. Cada herramienta en su etapa correcta.',
+   351→      en: 'Build the perfect CI/CD pipeline. Each tool in its correct stage.',
+   352→    },
+   353→    gameGoal: 8,
+   354→    accent: 'violet',
+   355→    howTo: [
+   356→      { es: 'Hay 4 etapas del pipeline: SOURCE → BUILD → TEST → DEPLOY.', en: 'There are 4 pipeline stages: SOURCE → BUILD → TEST → DEPLOY.' },
+   357→      { es: 'Debajo verás herramientas: Git, Docker, Jenkins, Postman, AWS, etc.', en: 'Below you will see tools: Git, Docker, Jenkins, Postman, AWS, etc.' },
+   358→      { es: 'Selecciona una herramienta y luego haz click en la etapa correcta.', en: 'Select a tool and then click the correct stage.' },
+   359→      { es: 'Cada herramienta colocada correctamente suma +1.', en: 'Each correctly placed tool scores +1.' },
+   360→      { es: '10 herramientas en total. Máximo 4 errores. Meta: 8 aciertos.', en: '10 tools total. Maximum 4 errors. Goal: 8 correct.' },
+   361→    ],
+   362→    scoring: { es: '+1 por herramienta en la etapa correcta. 4 errores y se acaba.', en: '+1 per tool in the correct stage. 4 errors and the game ends.' },
+   363→  },
+   364→  {
+   365→    id: 'lvl-6',
+   366→    index: 6,
+   367→    company: 'ESTUDIO2B',
+   368→    role: { es: 'Desarrollador Backend / Soporte de Aplicación', en: 'Backend Developer / Application Support' },
+   369→    location: { es: 'Freelance', en: 'Freelance' },
+   370→    mode: 'freelance',
+   371→    period: { es: 'Jun 2023 — Mar 2024', en: 'Jun 2023 — Mar 2024' },
+   372→    startDate: '2023-06',
+   373→    endDate: '2024-03',
+   374→    durationYears: 0.75,
+   375→    summary: {
+   376→      es: 'Desarrollo y mantenimiento de módulos backend en PHP/Laravel para una aplicación web de consultoría médica. APIs REST consumidas por el frontend, optimización de consultas MySQL y resolución de bugs en producción.',
+   377→      en: 'Development and maintenance of backend modules in PHP/Laravel for a medical consultation web app. REST APIs consumed by the frontend, MySQL query optimization and production bug resolution.',
+   378→    },
+   379→    achievements: [
+   380→      {
+   381→        es: 'Desarrollo de módulos backend en PHP/Laravel',
+   382→        en: 'Development of backend modules in PHP/Laravel',
+   383→      },
+   384→      {
+   385→        es: 'Implementación de APIs REST consumidas por el frontend',
+   386→        en: 'Implementation of REST APIs consumed by the frontend',
+   387→      },
+   388→      {
+   389→        es: 'Optimización de consultas MySQL en funciones críticas',
+   390→        en: 'Optimization of MySQL queries in critical functions',
+   391→      },
+   392→      {
+   393→        es: 'Diagnóstico y resolución de bugs en producción',
+   394→        en: 'Diagnosis and resolution of production bugs',
+   395→      },
+   396→      {
+   397→        es: 'Revisiones de código y documentación técnica',
+   398→        en: 'Code reviews and technical documentation',
+   399→      },
+   400→    ],
+   401→    skills: ['php', 'laravel', 'mysql', 'rest-api', 'git', 'documentation'],
+   402→    gameId: 'bug-hunter',
+   403→    gameTitle: { es: 'Cazador de Bugs', en: 'Bug Hunter' },
+   404→    gameDescription: {
+   405→      es: 'El código Laravel tiene errores ocultos. Encuéntralos y arréglalos antes del deploy.',
+   406→      en: 'The Laravel code has hidden bugs. Find and fix them before deploy.',
+   407→    },
+   408→    gameGoal: 10,
+   409→    accent: 'orange',
+   410→    howTo: [
+   411→      { es: 'Aparece un fragmento de código PHP/Laravel con líneas numeradas.', en: 'A PHP/Laravel code snippet appears with numbered lines.' },
+   412→      { es: 'Una de las líneas contiene un bug (ej: SQL Injection, mass assignment).', en: 'One of the lines contains a bug (e.g. SQL Injection, mass assignment).' },
+   413→      { es: 'Haz click en la línea que creas que tiene el bug.', en: 'Click the line you think has the bug.' },
+   414→      { es: 'Si aciertas, aparece una explicación del bug y cómo arreglarlo.', en: 'If correct, an explanation of the bug and how to fix it appears.' },
+   415→      { es: '5 snippets en total. Evita clicks en líneas correctas. Meta: 10 puntos.', en: '5 snippets total. Avoid clicking correct lines. Goal: 10 points.' },
+   416→    ],
+   417→    scoring: { es: '+2 por bug encontrado, -1 por click en línea correcta.', en: '+2 per bug found, -1 for clicking a correct line.' },
+   418→  },
+   419→  {
+   420→    id: 'lvl-7',
+   421→    index: 7,
+   422→    company: 'SERED',
+   423→    role: { es: 'Analista de Soporte Técnico L2', en: 'Technical Support Analyst L2' },
+   424→    location: { es: 'España', en: 'Spain' },
+   425→    mode: 'remote',
+   426→    period: { es: 'Abr 2024 — Feb 2026', en: 'Apr 2024 — Feb 2026' },
+   427→    startDate: '2024-04',
+   428→    endDate: '2026-02',
+   429→    durationYears: 1.85,
+   430→    summary: {
+   431→      es: 'Reducción del 80-90% en tiempo de resolución de tickets. Migración de servidores y hosting con Installatron Manager a través de cPanel. Scripts Bash de automatización y gestión de +100 clientes activos mensuales.',
+   432→      en: '80-90% reduction in ticket resolution time. Server and hosting migration with Installatron Manager via cPanel. Bash automation scripts and management of +100 active monthly customers.',
+   433→    },
+   434→    achievements: [
+   435→      {
+   436→        es: 'Reducción del 80-90% en tiempo medio de resolución de tickets',
+   437→        en: '80-90% reduction in average ticket resolution time',
+   438→      },
+   439→      {
+   440→        es: 'Migración de servidores con Installatron Manager vía cPanel',
+   441→        en: 'Server migration with Installatron Manager via cPanel',
+   442→      },
+   443→      {
+   444→        es: 'Desarrollo de scripts de automatización en Bash',
+   445→        en: 'Development of Bash automation scripts',
+   446→      },
+   447→      {
+   448→        es: 'Reestructuración de documentación interna y FAQ',
+   449→        en: 'Restructuring of internal documentation and FAQ',
+   450→      },
+   451→      {
+   452→        es: 'Gestión de +100 clientes activos mensuales con alta retención',
+   453→        en: 'Management of +100 active monthly customers with high retention',
+   454→      },
+   455→    ],
+   456→    skills: ['installatron', 'cpanel', 'bash', 'documentation', 'whmcs', 'jira', 'intercom', 'english-b1', 'sysadmin'],
+   457→    gameId: 'migration',
+   458→    gameTitle: { es: 'Migración Zero Downtime', en: 'Zero Downtime Migration' },
+   459→    gameDescription: {
+   460→      es: 'Migra 20 cuentas de servidor sin bajar el uptime. La velocidad mata, la paciencia salva.',
+   461→      en: 'Migrate 20 server accounts without dropping uptime. Speed kills, patience saves.',
+   462→    },
+   463→    gameGoal: 20,
+   464→    accent: 'emerald',
+   465→    howTo: [
+   466→      { es: 'Hay 2 servidores: Origen (izquierda) y Destino (derecha).', en: 'There are 2 servers: Source (left) and Destination (right).' },
+   467→      { es: 'Las cuentas tienen tamaños: S (carga 4), M (carga 8), L (carga 14).', en: 'Accounts have sizes: S (load 4), M (load 8), L (load 14).' },
+   468→      { es: 'Haz click en cuentas del origen para migrarlas al destino.', en: 'Click accounts on the source to migrate them to the destination.' },
+   469→      { es: 'No sobrepases la carga máxima (60) o el uptime bajará.', en: 'Do not exceed the maximum load (60) or uptime will drop.' },
+   470→      { es: '20 cuentas en total. Bonus por uptime. Duración: 60s. Meta: 20.', en: '20 accounts total. Bonus for uptime. Duration: 60s. Goal: 20.' },
+   471→    ],
+   472→    scoring: { es: '+1 por cuenta migrada + bonus por uptime final.', en: '+1 per migrated account + bonus for final uptime.' },
+   473→  },
+   474→  {
+   475→    id: 'lvl-8',
+   476→    index: 8,
+   477→    company: 'Zentra SaaS',
+   478→    role: { es: 'Prompt Engineer', en: 'Prompt Engineer' },
+   479→    location: { es: 'Remoto', en: 'Remote' },
+   480→    mode: 'freelance',
+   481→    period: { es: 'Mar 2026 — Actualmente', en: 'Mar 2026 — Present' },
+   482→    startDate: '2026-03',
+   483→    endDate: 'present',
+   484→    durationYears: 0.3,
+   485→    summary: {
+   486→      es: 'Diseño y optimización de frameworks de prompting estructurado para LLMs, apoyando desarrollo de software, resolución de incidencias y automatización de flujos. Implementación de procesos de QA asistidos por IA para validación de despliegues, análisis de incidentes y gestión de cambios.',
+   487→      en: 'Design and optimization of structured prompting frameworks for LLMs, supporting software development, incident resolution and workflow automation. Implementation of AI-assisted QA processes for deployment validation, incident analysis and change management.',
+   488→    },
+   489→    achievements: [
+   490→      {
+   491→        es: 'Diseñé y optimicé frameworks de prompting estructurado para apoyar el desarrollo de software, la resolución de incidencias, la automatización de flujos de trabajo y la toma de decisiones técnicas mediante el uso de Modelos de Lenguaje de Gran Escala (LLMs).',
+   492→        en: 'Designed and optimized structured prompting frameworks to support software development, incident resolution, workflow automation, and technical decision-making using Large Language Models (LLMs).',
+   493→      },
+   494→      {
+   495→        es: 'Implementé procesos de validación y control de calidad asistidos por IA, utilizando instrucciones estructuradas para verificar resultados, detectar inconsistencias y apoyar revisiones técnicas antes de la implementación de cambios.',
+   496→        en: 'Implemented AI-assisted validation and quality control processes, using structured instructions to verify results, detect inconsistencies, and support technical reviews before implementing changes.',
+   497→      },
+   498→      {
+   499→        es: 'Implementé procesos de aseguramiento de calidad y validación operativa asistidos por IA para revisiones de despliegue, análisis de incidentes, gestión de cambios y mejora continua de procesos.',
+   500→        en: 'Implemented AI-assisted quality assurance and operational validation processes for deployment reviews, incident analysis, change management, and continuous process improvement.',
+   501→      },
+   502→      {
+   503→        es: 'Diseñé flujos de automatización orientados a la gestión de despliegues y lanzamientos (Release Management), incorporando validaciones preventivas, generación de respaldos, control de cambios y soporte a procesos de integración continua.',
+   504→        en: 'Designed automation flows oriented toward deployment and release management, incorporating preventive validations, backup generation, change control, and support for continuous integration processes.',
+   505→      },
+   506→    ],
+   507→    skills: ['prompt-engineering', 'llm', 'ai-qa', 'release-management', 'change-management', 'automation-flows'],
+   508→    gameId: 'prompt-architect',
+   509→    gameTitle: { es: 'Arquitecto de Prompts', en: 'Prompt Architect' },
+   510→    gameDescription: {
+   511→      es: 'Construye prompts estructurados para cada escenario técnico. Selecciona los componentes correctos y valida tu prompt antes de enviarlo al LLM.',
+   512→      en: 'Build structured prompts for each technical scenario. Select the correct components and validate your prompt before sending it to the LLM.',
+   513→    },
+   514→    gameGoal: 12,
+   515→    accent: 'fuchsia',
+   516→    howTo: [
+   517→      { es: 'Aparece un escenario técnico (ej: “Diagnosticar incidente de producción”).', en: 'A technical scenario appears (e.g. “Diagnose production incident”).' },
+   518→      { es: 'Se muestran 8 componentes de prompt en 5 categorías: ROL, CONTEXTO, INSTRUCCIÓN, RESTRICCIÓN, FORMATO.', en: '8 prompt components are shown in 5 categories: ROLE, CONTEXT, INSTRUCTION, CONSTRAINT, FORMAT.' },
+   519→      { es: '4 componentes son correctos para el escenario y 4 son distractores.', en: '4 components are correct for the scenario and 4 are distractors.' },
+   520→      { es: 'Selecciona los 4 correctos y pulsa “VALIDAR PROMPT”.', en: 'Select the 4 correct ones and press “VALIDATE PROMPT”.' },
+   521→      { es: '+2 por correcto, -1 por incorrecto. 6 escenarios. Meta: 12 puntos.', en: '+2 per correct, -1 per wrong. 6 scenarios. Goal: 12 points.' },
+   522→    ],
+   523→    scoring: { es: '+2 por componente correcto, -1 por incorrecto. 6 escenarios.', en: '+2 per correct component, -1 per wrong. 6 scenarios.' },
+   524→  },
+   525→];
+   526→
+   527→// ────────────────────────────────────────────────────────────────────────────
+   528→// PERSONAL INFO
+   529→// ────────────────────────────────────────────────────────────────────────────
+   530→export const PERSON = {
+   531→  name: 'José Pérez',
+   532→  title: {
+   533→    es: 'SYSADMIN · JR. DEVOPS ENGINEER · TECHNICAL SUPPORT L2',
+   534→    en: 'SYSADMIN · JR. DEVOPS ENGINEER · TECHNICAL SUPPORT L2',
+   535→  },
+   536→  email: 'shelouiss@gmail.com',
+   537→  phone: '+58 414 794 8934',
+   538→  linkedin: 'https://www.linkedin.com/in/shel0u',
+   539→  linkedinHandle: 'in/shel0u',
+   540→  country: { es: 'Venezuela', en: 'Venezuela' },
+   541→  workMode: 'remote' as WorkMode,
+   542→  summary: {
+   543→    es: 'Administrador de Sistemas (Sysadmin) y Soporte Técnico L2 con más de 10 años de experiencia en infraestructura Linux, hosting web, automatización DevOps y desarrollo backend. He gestionado entornos de alta demanda con más de 20,000 clientes y flotas de servidores de producción en empresas de hosting y cloud. Dominio de cPanel, AWS, DigitalOcean, Docker, Jenkins y pipelines CI/CD, complementado con desarrollo en PHP/Laravel y MySQL. Inglés B1 certificado.',
+   544→    en: 'Systems Administrator (Sysadmin) and Technical Support L2 with over 10 years of experience in Linux infrastructure, web hosting, DevOps automation and backend development. Managed high-demand environments with over 20,000 customers and production server fleets in hosting and cloud companies. Proficient in cPanel, AWS, DigitalOcean, Docker, Jenkins and CI/CD pipelines, complemented by PHP/Laravel and MySQL development. Certified English B1.',
+   545→  },
+   546→  goal: {
+   547→    es: 'Busco unirme a equipos de infraestructura o DevOps en empresas SaaS, hosting o cloud donde pueda aportar experiencia técnica real y crecer hacia roles de SRE o DevOps Senior.',
+   548→    en: 'Seeking to join infrastructure or DevOps teams in SaaS, hosting or cloud companies where I can bring real technical experience and grow toward SRE or Senior DevOps roles.',
+   549→  },
+   550→  tags: {
+   551→    es: ['Linux', 'Docker', 'AWS', 'cPanel', 'PHP/Laravel', 'Jenkins', 'Zabbix', 'DigitalOcean', 'Sysadmin'],
+   552→    en: ['Linux', 'Docker', 'AWS', 'cPanel', 'PHP/Laravel', 'Jenkins', 'Zabbix', 'DigitalOcean', 'Sysadmin'],
+   553→  },
+   554→};
+   555→
+   556→export const EDUCATION = [
+   557→  {
+   558→    title: {
+   559→      es: 'Ingeniería Informática (en curso)',
+   560→      en: 'Computer Engineering (in progress)',
+   561→    },
+   562→    institution: {
+   563→      es: 'UGMA — Universidad Gran Mariscal de Ayacucho',
+   564→      en: 'UGMA — Universidad Gran Mariscal de Ayacucho',
+   565→    },
+   566→    period: { es: '2018 — Presente', en: '2018 — Present' },
+   567→    detail: {
+   568→      es: 'Formación en sistemas, redes y arquitectura de software.',
+   569→      en: 'Training in systems, networks and software architecture.',
+   570→    },
+   571→  },
+   572→  {
+   573→    title: {
+   574→      es: 'Técnico Medio en Informática',
+   575→      en: 'Computer Technician',
+   576→    },
+   577→    institution: {
+   578→      es: 'Escuela Técnica Juan Crisóstomo Falcón',
+   579→      en: 'Escuela Técnica Juan Crisóstomo Falcón',
+   580→    },
+   581→    period: { es: '2011 — 2014', en: '2011 — 2014' },
+   582→    detail: {
+   583→      es: 'Formación técnica en informática y sistemas.',
+   584→      en: 'Technical training in computing and systems.',
+   585→    },
+   586→  },
+   587→];
+   588→
+   589→export const CERTIFICATIONS = [
+   590→  {
+   591→    name: {
+   592→      es: 'Docker: De cero a experto (Docker Compose e Images)',
+   593→      en: 'Docker: From zero to expert (Docker Compose and Images)',
+   594→    },
+   595→    issuer: 'Platzi',
+   596→  },
+   597→  {
+   598→    name: { es: 'B1 Inglés Conversacional', en: 'B1 Conversational English' },
+   599→    issuer: 'Platzi',
+   600→  },
+   601→  {
+   602→    name: { es: 'Inglés Avanzado', en: 'Advanced English' },
+   603→    issuer: 'Sinergy Institute',
+   604→  },
+   605→];
+   606→
+   607→// helper: skills unlocked up to a given level (inclusive)
+   608→export function unlockedSkillsUpTo(levelIndex: number, completedIds: Set<string>): (Skill & { name: Bi })[] {
+   609→  const ids = new Set<string>();
+   610→  for (const lvl of JOB_LEVELS) {
+   611→    if (lvl.index <= levelIndex && completedIds.has(lvl.id)) {
+   612→      lvl.skills.forEach((s) => ids.add(s));
+   613→    }
+   614→  }
+   615→  return SKILLS.filter((s) => ids.has(s.id));
+   616→}
+   617→
+   618→// all skills that CAN be unlocked (full stack)
+   619→export const TOTAL_UNLOCKABLE_SKILLS = SKILLS.filter((s) =>
+   620→  JOB_LEVELS.some((lvl) => lvl.skills.includes(s.id)),
+   621→).length;
+   622→
+   623→// total levels
+   624→export const TOTAL_LEVELS = JOB_LEVELS.length;
+   625→
+   626→// helper to get skill name by lang
+   627→export function skillName(skill: (typeof SKILLS)[number], lang: Lang): string {
+   628→  return skill.name[lang];
+   629→}
+   630→

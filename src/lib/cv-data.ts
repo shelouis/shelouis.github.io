@@ -140,6 +140,14 @@ export const JOB_LEVELS: JobLevel[] = [
     },
     gameGoal: 15,
     accent: 'emerald',
+    howTo: [
+      { es: 'Los tickets caen desde arriba en 3 canales: Chat, Email y VoIP.', en: 'Tickets fall from the top in 3 channels: Chat, Email and VoIP.' },
+      { es: 'Haz click en cada ticket antes de que llegue a la línea roja de SLA.', en: 'Click each ticket before it reaches the red SLA line.' },
+      { es: 'Los tickets rojos marcados URG valen +3, los ámbar +2, los verdes +1.', en: 'Red tickets marked URG are worth +3, amber +2, green +1.' },
+      { es: 'Si un ticket llega al SLA, pierdes una vida. Tienes 3 vidas.', en: 'If a ticket reaches the SLA line, you lose a life. You have 3 lives.' },
+      { es: 'Duración: 45 segundos. Meta: 15 puntos.', en: 'Duration: 45 seconds. Goal: 15 points.' },
+    ],
+    scoring: { es: '+3 urgente, +2 medio, +1 normal. Pierdes vidas si caen al SLA.', en: '+3 urgent, +2 medium, +1 normal. Lose lives if they reach SLA.' },
   },
   {
     id: 'lvl-2',
@@ -183,6 +191,14 @@ export const JOB_LEVELS: JobLevel[] = [
     },
     gameGoal: 20,
     accent: 'amber',
+    howTo: [
+      { es: 'Aparece un grid 3x3 con 9 servidores de la flota VenezuelaHosting.', en: 'A 3x3 grid appears with 9 servers from the VenezuelaHosting fleet.' },
+      { es: 'Los servidores pasan de OK → WARN (ámbar) → CRIT (rojo) si no los reparas.', en: 'Servers go from OK → WARN (amber) → CRIT (red) if you do not fix them.' },
+      { es: 'Haz click en un servidor WARN para repararlo (+2 puntos).', en: 'Click a WARN server to fix it (+2 points).' },
+      { es: 'Si pasa a CRIT, solo vale +1 y empieza a bajar el uptime.', en: 'If it turns CRIT, it is only worth +1 and starts dropping uptime.' },
+      { es: 'Mantén el uptime alto. Bonus de +uptime/5 al final. Duración: 45s.', en: 'Keep uptime high. Bonus of +uptime/5 at the end. Duration: 45s.' },
+    ],
+    scoring: { es: '+2 reparar en ámbar, +1 en rojo. Bonus por uptime al final.', en: '+2 fix in amber, +1 in red. Bonus for uptime at the end.' },
   },
   {
     id: 'lvl-3',
@@ -230,6 +246,14 @@ export const JOB_LEVELS: JobLevel[] = [
     },
     gameGoal: 16,
     accent: 'cyan',
+    howTo: [
+      { es: 'Aparece una tarea de configuración (ej: “Crear cuenta de hosting”).', en: 'A config task appears (e.g. “Create hosting account”).' },
+      { es: 'Debajo hay 4 paneles: cPanel, DirectAdmin, Plesk y VestaPanel.', en: 'Below are 4 panels: cPanel, DirectAdmin, Plesk and VestaPanel.' },
+      { es: 'Haz click en el panel donde se ejecuta esa tarea.', en: 'Click the panel where that task is executed.' },
+      { es: 'Cada acierto suma +1. Si fallas, suma un error.', en: 'Each correct answer scores +1. If you fail, it counts as an error.' },
+      { es: '16 tareas en total. Máximo 5 errores. Meta: 16 aciertos.', en: '16 tasks total. Maximum 5 errors. Goal: 16 correct.' },
+    ],
+    scoring: { es: '+1 por tarea correcta. Falla 5 y se acaba.', en: '+1 per correct task. 5 errors and the game ends.' },
   },
   {
     id: 'lvl-4',
@@ -277,6 +301,14 @@ export const JOB_LEVELS: JobLevel[] = [
     },
     gameGoal: 12,
     accent: 'rose',
+    howTo: [
+      { es: 'Llega un ticket nuevo desde WHMCS con un asunto específico.', en: 'A new ticket arrives from WHMCS with a specific subject.' },
+      { es: 'Tienes 4 analistas: Ana (cPanel), Luis (Redes), María (Email), Carlos (SSL).', en: 'You have 4 analysts: Ana (cPanel), Luis (Networks), María (Email), Carlos (SSL).' },
+      { es: 'Lee el asunto del ticket y haz click en el especialista correcto.', en: 'Read the ticket subject and click the right specialist.' },
+      { es: 'Cada asignación correcta suma +1. Las incorrectas suman errores.', en: 'Each correct assignment scores +1. Wrong ones count as errors.' },
+      { es: '12 tickets en total. Máximo 4 errores. Meta: 12 aciertos.', en: '12 tickets total. Maximum 4 errors. Goal: 12 correct.' },
+    ],
+    scoring: { es: '+1 por ticket bien asignado. 4 errores y se acaba.', en: '+1 per correctly assigned ticket. 4 errors and the game ends.' },
   },
   {
     id: 'lvl-5',
@@ -320,13 +352,21 @@ export const JOB_LEVELS: JobLevel[] = [
     },
     gameGoal: 8,
     accent: 'violet',
+    howTo: [
+      { es: 'Hay 4 etapas del pipeline: SOURCE → BUILD → TEST → DEPLOY.', en: 'There are 4 pipeline stages: SOURCE → BUILD → TEST → DEPLOY.' },
+      { es: 'Debajo verás herramientas: Git, Docker, Jenkins, Postman, AWS, etc.', en: 'Below you will see tools: Git, Docker, Jenkins, Postman, AWS, etc.' },
+      { es: 'Selecciona una herramienta y luego haz click en la etapa correcta.', en: 'Select a tool and then click the correct stage.' },
+      { es: 'Cada herramienta colocada correctamente suma +1.', en: 'Each correctly placed tool scores +1.' },
+      { es: '10 herramientas en total. Máximo 4 errores. Meta: 8 aciertos.', en: '10 tools total. Maximum 4 errors. Goal: 8 correct.' },
+    ],
+    scoring: { es: '+1 por herramienta en la etapa correcta. 4 errores y se acaba.', en: '+1 per tool in the correct stage. 4 errors and the game ends.' },
   },
   {
     id: 'lvl-6',
     index: 6,
     company: 'ESTUDIO2B',
     role: { es: 'Desarrollador Backend / Soporte de Aplicación', en: 'Backend Developer / Application Support' },
-    location: { es: 'Freelance', en: 'Freelance' },
+    location: { es: 'Remoto', en: 'Remote' },
     mode: 'freelance',
     period: { es: 'Jun 2023 — Mar 2024', en: 'Jun 2023 — Mar 2024' },
     startDate: '2023-06',
@@ -363,10 +403,18 @@ export const JOB_LEVELS: JobLevel[] = [
     gameTitle: { es: 'Cazador de Bugs', en: 'Bug Hunter' },
     gameDescription: {
       es: 'El código Laravel tiene errores ocultos. Encuéntralos y arréglalos antes del deploy.',
-      en: 'The Laravel code has hidden bugs. Find and fix them before deploy.',
+      en: 'The Laravel code has hidden bugs. Find and fix them before deployment.',
     },
     gameGoal: 10,
     accent: 'orange',
+    howTo: [
+      { es: 'Aparece un fragmento de código PHP/Laravel con líneas numeradas.', en: 'A PHP/Laravel code snippet appears with numbered lines.' },
+      { es: 'Una de las líneas contiene un bug (ej: SQL Injection, mass assignment).', en: 'One of the lines contains a bug (e.g. SQL Injection, mass assignment).' },
+      { es: 'Haz click en la línea que creas que tiene el bug.', en: 'Click the line you think has the bug.' },
+      { es: 'Si aciertas, aparece una explicación del bug y cómo arreglarlo.', en: 'If correct, an explanation of the bug and how to fix it appears.' },
+      { es: '5 snippets en total. Evita clicks en líneas correctas. Meta: 10 puntos.', en: '5 snippets total. Avoid clicking correct lines. Goal: 10 points.' },
+    ],
+    scoring: { es: '+2 por bug encontrado, -1 por click en línea correcta.', en: '+2 per bug found, -1 for clicking a correct line.' },
   },
   {
     id: 'lvl-7',
@@ -414,6 +462,14 @@ export const JOB_LEVELS: JobLevel[] = [
     },
     gameGoal: 20,
     accent: 'emerald',
+    howTo: [
+      { es: 'Hay 2 servidores: Origen (izquierda) y Destino (derecha).', en: 'There are 2 servers: Source (left) and Destination (right).' },
+      { es: 'Las cuentas tienen tamaños: S (carga 4), M (carga 8), L (carga 14).', en: 'Accounts have sizes: S (load 4), M (load 8), L (load 14).' },
+      { es: 'Haz click en cuentas del origen para migrarlas al destino.', en: 'Click accounts on the source to migrate them to the destination.' },
+      { es: 'No sobrepases la carga máxima (60) o el uptime bajará.', en: 'Do not exceed the maximum load (60) or uptime will drop.' },
+      { es: '20 cuentas en total. Bonus por uptime. Duración: 60s. Meta: 20.', en: '20 accounts total. Bonus for uptime. Duration: 60s. Goal: 20.' },
+    ],
+    scoring: { es: '+1 por cuenta migrada + bonus por uptime final.', en: '+1 per migrated account + bonus for final uptime.' },
   },
   {
     id: 'lvl-8',
@@ -457,6 +513,14 @@ export const JOB_LEVELS: JobLevel[] = [
     },
     gameGoal: 12,
     accent: 'fuchsia',
+    howTo: [
+      { es: 'Aparece un escenario técnico (ej: “Diagnosticar incidente de producción”).', en: 'A technical scenario appears (e.g. “Diagnose production incident”).' },
+      { es: 'Se muestran 8 componentes de prompt en 5 categorías: ROL, CONTEXTO, INSTRUCCIÓN, RESTRICCIÓN, FORMATO.', en: '8 prompt components are shown in 5 categories: ROLE, CONTEXT, INSTRUCTION, CONSTRAINT, FORMAT.' },
+      { es: '4 componentes son correctos para el escenario y 4 son distractores.', en: '4 components are correct for the scenario and 4 are distractors.' },
+      { es: 'Selecciona los 4 correctos y pulsa “VALIDAR PROMPT”.', en: 'Select the 4 correct ones and press “VALIDATE PROMPT”.' },
+      { es: '+2 por correcto, -1 por incorrecto. 6 escenarios. Meta: 12 puntos.', en: '+2 per correct, -1 per wrong. 6 scenarios. Goal: 12 points.' },
+    ],
+    scoring: { es: '+2 por componente correcto, -1 por incorrecto. 6 escenarios.', en: '+2 per correct component, -1 per wrong. 6 scenarios.' },
   },
 ];
 

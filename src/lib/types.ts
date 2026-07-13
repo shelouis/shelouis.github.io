@@ -2,7 +2,7 @@
 
 import type { Lang } from './i18n';
 
-export type Screen = 'lang' | 'boot' | 'map' | 'game' | 'cv';
+export type Screen = 'lang' | 'boot' | 'map' | 'game' | 'cv' | 'docs';
 
 export type WorkMode = 'remote' | 'hybrid' | 'freelance';
 
@@ -45,6 +45,8 @@ export interface JobLevel {
   gameDescription: Bi;
   gameGoal: number; // target score to "complete"
   accent: string; // accent name, e.g. 'emerald'
+  howTo: Bi[]; // step-by-step instructions on how to play
+  scoring: Bi; // how scoring works
 }
 
 export type GameId =
