@@ -2,7 +2,12 @@
 
 > An interactive 8-bit retro web game (NES/SNES style) that presents José Pérez's professional career as a playable journey of 8 levels. Each level represents a real job role, with its own mini-game, unique mechanics, and unlockable skills based on the actual tech stack from the CV.
 
-![Tech Stack](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+### 🚀 [PLAY THE GAME →](https://shelouis-github-io.vercel.app/)
+
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-Play_Now-3aff3a?style=for-the-badge&logo=vercel&logoColor=white)](https://shelouis-github-io.vercel.app/)
+[![GitHub](https://img.shields.io/badge/Source_Code-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shelouis/shelouis.github.io)
+
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8?logo=tailwindcss)
 ![Status](https://img.shields.io/badge/Status-Portfolio_Ready-success)
@@ -19,6 +24,11 @@
 # 🎮 SYSADMIN QUEST — CV Interactivo
 
 > Un videojuego web interactivo estilo 8-bit retro (NES/SNES) que presenta la carrera profesional de José Pérez como un recorrido jugable de 8 niveles. Cada nivel representa un puesto real de trabajo, con su propio mini-juego, mecánicas únicas y habilidades desbloqueables basadas en el stack tecnológico real del CV.
+
+### 🚀 [JUGAR AHORA →](https://shelouis-github-io.vercel.app/)
+
+[![Demo en Vivo](https://img.shields.io/badge/DEMO_EN_VIVO-Jugar_Ahora-3aff3a?style=for-the-badge&logo=vercel&logoColor=white)](https://shelouis-github-io.vercel.app/)
+[![GitHub](https://img.shields.io/badge/Código_Fuente-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shelouis/shelouis.github.io)
 
 ### 🎯 Motivo del Proyecto
 
