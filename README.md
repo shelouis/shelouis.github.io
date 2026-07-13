@@ -41,6 +41,19 @@ Los CV tradicionales en PDF son estáticos y no muestran las habilidades técnic
 
 El objetivo es que un reclutador o equipo técnico **aprenda el perfil de José Pérez de forma memorable e interactiva**, en lugar de leer un PDF aburrido.
 
+---
+
+> ### 🎮 ¿Listo para Jugar?
+> No solo leas sobre el proyecto — **¡vívelo tú mismo!**
+>
+> [![Jugar Ahora](https://img.shields.io/badge/▶_JUGAR_EL_JUEGO-8_niveles_·_50_habilidades-3aff3a?style=for-the-badge&logo=vercel&logoColor=white)](https://shelouis-github-io.vercel.app/)
+>
+> 🌐 Elige tu idioma (ES/EN), selecciona un rol, supera los desafíos y desbloquea el stack completo.
+>
+> 🔗 **Demo en vivo:** [shelouis-github-io.vercel.app](https://shelouis-github-io.vercel.app/)
+
+---
+
 ### ✨ Características Principales
 
 - **8 mini-juegos únicos** — cada nivel tiene mecánicas distintas inspiradas en tareas reales del puesto
@@ -122,6 +135,19 @@ Traditional PDF resumes are static and don't showcase a candidate's actual techn
 4. **Enjoy the process** with an 8-bit retro aesthetic, chiptune sound effects, and background music
 
 The goal is for a recruiter or technical team to **learn José Pérez's profile in a memorable and interactive way**, rather than reading a boring PDF.
+
+---
+
+> ### 🎮 Ready to Play?
+> Don't just read about it — **experience it yourself!**
+>
+> [![Play Now](https://img.shields.io/badge/▶_PLAY_THE_GAME-8_levels_·_50_skills-3aff3a?style=for-the-badge&logo=vercel&logoColor=white)](https://shelouis-github-io.vercel.app/)
+>
+> 🌐 Choose your language (ES/EN), pick a role, beat the challenges, and unlock the full tech stack.
+>
+> 🔗 **Live demo:** [shelouis-github-io.vercel.app](https://shelouis-github-io.vercel.app/)
+
+---
 
 ### ✨ Key Features
 
