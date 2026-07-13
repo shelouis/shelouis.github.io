@@ -61,7 +61,7 @@ export const UI: Dict = {
 
   // Boot
   'boot.welcome': { es: 'Bienvenido,', en: 'Welcome,' },
-  'boot.recruit': { es: 'recluta', en: 'recruit' },
+  'boot.recruit': { es: 'reclutador IT', en: 'IT recruiter' },
   'boot.intro': { es: 'Vas a recorrer 10+ años de carrera de', en: "You'll explore 10+ years of" },
   'boot.start': { es: 'INICIAR MISIÓN', en: 'START MISSION' },
   'boot.tip': { es: 'Tip: cada nivel desbloquea habilidades reales del CV.', en: 'Tip: each level unlocks real CV skills.' },
