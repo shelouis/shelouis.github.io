@@ -58,7 +58,7 @@ export default function Documentation() {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, ease: 'steps(4)' }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
         className="relative mb-6"
       >
         <div className="flex items-center gap-3 mb-2">
@@ -286,7 +286,7 @@ export default function Documentation() {
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-              transition={{ duration: 0.2, ease: 'steps(4)' }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
               className="relative max-w-3xl w-full"
               onClick={(e) => e.stopPropagation()}
             >

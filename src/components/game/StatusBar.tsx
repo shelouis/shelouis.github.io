@@ -99,7 +99,7 @@ export default function StatusBar() {
               className="h-full bg-emerald-500"
               initial={{ width: 0 }}
               animate={{ width: `${skillPct}%` }}
-              transition={{ duration: 0.4, ease: 'steps(8)' }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
             />
           </div>
         </div>
