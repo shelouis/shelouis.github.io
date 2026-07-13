@@ -2,6 +2,7 @@
 
 import { Terminal, Heart } from 'lucide-react';
 import { PERSON } from '@/lib/cv-data';
+import { useLang } from '@/store/game-store';
 
 interface FooterProps {
   completedCount: number;
@@ -9,7 +10,9 @@ interface FooterProps {
 }
 
 export function Footer({ completedCount, totalLevels }: FooterProps) {
+  const lang = useLang();
   const pct = Math.round((completedCount / totalLevels) * 100);
+  const levelsLabel = lang === 'es' ? 'niveles' : 'levels';
 
   return (
     <footer className="mt-auto border-t border-emerald-500/20 bg-black/40 backdrop-blur-sm">
@@ -24,11 +27,17 @@ export function Footer({ completedCount, totalLevels }: FooterProps) {
               <span className="text-emerald-500/40 mx-1.5">·</span>
               <span>{PERSON.name}</span>
               <span className="text-emerald-500/40 mx-1.5">·</span>
-              <span>{completedCount}/{totalLevels} niveles ({pct}%)</span>
+              <span>
+                {completedCount}/{totalLevels} {levelsLabel} ({pct}%)
+              </span>
             </div>
           </div>
           <div className="font-mono-game text-[10px] text-emerald-500/50 flex items-center gap-1.5">
-            <span>CV interactivo basado en carrera real</span>
+            <span>
+              {lang === 'es'
+                ? 'CV interactivo basado en carrera real'
+                : 'Interactive CV based on a real career'}
+            </span>
             <Heart className="h-3 w-3 text-rose-400/60" />
           </div>
         </div>

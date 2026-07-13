@@ -7,6 +7,8 @@ import type { JobLevel } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { getAccent } from '@/lib/accents';
+import { useLang, useT } from '@/store/game-store';
+import { t } from '@/lib/i18n';
 
 type Phase = 'intro' | 'playing' | 'done';
 
@@ -26,6 +28,8 @@ export function GameFrame({ level, onExit, onComplete, children }: GameFrameProp
   const [phase, setPhase] = useState<Phase>('intro');
   const [finalScore, setFinalScore] = useState(0);
   const accent = getAccent(level.accent);
+  const lang = useLang();
+  const tt = useT();
 
   const handleScore = (score: number) => {
     setFinalScore(score);
@@ -48,7 +52,7 @@ export function GameFrame({ level, onExit, onComplete, children }: GameFrameProp
             className="text-emerald-400/70 hover:text-emerald-200 hover:bg-emerald-500/10 h-8 px-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline ml-1 font-mono-game text-xs">Salir</span>
+            <span className="hidden sm:inline ml-1 font-mono-game text-xs">{tt('nav.exit')}</span>
           </Button>
           <div className="flex items-center gap-2 min-w-0">
             <span
@@ -58,18 +62,15 @@ export function GameFrame({ level, onExit, onComplete, children }: GameFrameProp
             </span>
             <div className="min-w-0">
               <div className="font-mono-game text-xs text-emerald-500/60 truncate">
-                {level.company} · {level.role}
+                {level.company} · {level.role[lang]}
               </div>
               <div className={`font-mono-game text-sm font-bold ${accent.text} truncate`}>
-                {level.gameTitle}
+                {level.gameTitle[lang]}
               </div>
             </div>
           </div>
-          <Badge
-            variant="outline"
-            className={`ml-auto shrink-0 font-mono-game text-[10px] ${accent.badge}`}
-          >
-            META: {level.gameGoal}
+          <Badge variant="outline" className={`ml-auto shrink-0 font-mono-game text-[10px] ${accent.badge}`}>
+            {tt('map.goal')}: {level.gameGoal}
           </Badge>
         </div>
       </div>
@@ -140,6 +141,8 @@ function IntroCard({
   accent: ReturnType<typeof getAccent>;
   onStart: () => void;
 }) {
+  const lang = useLang();
+  const tt = useT();
   return (
     <div className="panel rounded-lg p-6 sm:p-8">
       <div
@@ -147,33 +150,33 @@ function IntroCard({
       >
         <Info className={`h-3 w-3 ${accent.text}`} />
         <span className={`font-mono-game text-[10px] tracking-widest ${accent.text}`}>
-          BRIEFING DE MISIÓN
+          {tt('game.briefing')}
         </span>
       </div>
 
       <h2 className={`font-mono-game text-2xl sm:text-3xl font-bold ${accent.textBright} glow-text mb-2`}>
-        {level.gameTitle}
+        {level.gameTitle[lang]}
       </h2>
-      <p className="text-sm text-emerald-300/80 mb-6">{level.gameDescription}</p>
+      <p className="text-sm text-emerald-300/80 mb-6">{level.gameDescription[lang]}</p>
 
       {/* Context */}
       <div className="rounded-md border border-emerald-500/20 bg-black/30 p-4 mb-6">
         <div className="font-mono-game text-[10px] text-emerald-500/60 tracking-widest mb-2">
-          CONTEXTO REAL
+          {tt('game.context')}
         </div>
-        <p className="text-sm text-emerald-200/90 leading-relaxed">{level.summary}</p>
+        <p className="text-sm text-emerald-200/90 leading-relaxed">{level.summary[lang]}</p>
       </div>
 
       {/* Achievements preview */}
       <div className="mb-6">
         <div className="font-mono-game text-[10px] text-emerald-500/60 tracking-widest mb-2">
-          LOGROS REALES EN ESTE ROL
+          {tt('game.achievements')}
         </div>
         <ul className="space-y-1.5">
           {level.achievements.slice(0, 3).map((a, i) => (
             <li key={i} className="flex items-start gap-2 text-xs text-emerald-300/80">
               <span className={`${accent.text} mt-0.5`}>▸</span>
-              <span>{a}</span>
+              <span>{a[lang]}</span>
             </li>
           ))}
         </ul>
@@ -184,7 +187,10 @@ function IntroCard({
         <div className="flex items-center gap-2">
           <Trophy className="h-4 w-4 text-amber-400" />
           <span className="font-mono-game text-xs text-emerald-300/80">
-            OBJETIVO: <span className="text-amber-300 font-bold">{level.gameGoal} puntos</span>
+            {tt('game.objective')}:{' '}
+            <span className="text-amber-300 font-bold">
+              {level.gameGoal} {tt('game.points')}
+            </span>
           </span>
         </div>
         <div className="font-mono-game text-[10px] text-emerald-500/60">
@@ -197,7 +203,7 @@ function IntroCard({
         className={`w-full font-mono-game font-bold ${accent.fill} ${accent.fillHover} text-black h-11`}
       >
         <Play className="h-4 w-4 mr-2" />
-        COMENZAR DESAFÍO
+        {tt('game.start')}
       </Button>
     </div>
   );
@@ -216,6 +222,8 @@ function ResultCard({
   onFinish: () => void;
   onRetry: () => void;
 }) {
+  const lang = useLang();
+  const tt = useT();
   const ratio = score / level.gameGoal;
   const passed = ratio >= 1;
   const stars: 1 | 2 | 3 = ratio >= 1.3 ? 3 : ratio >= 1 ? 2 : 1;
@@ -242,20 +250,20 @@ function ResultCard({
       <h2
         className={`font-mono-game text-2xl font-bold ${passed ? 'text-emerald-200' : 'text-rose-300'} mb-1`}
       >
-        {passed ? '¡MISIÓN CUMPLIDA!' : 'INTÉNTALO DE NUEVO'}
+        {passed ? tt('game.passed') : tt('game.failed')}
       </h2>
       <p className="text-sm text-emerald-400/70 mb-6">
-        {passed ? 'Has demostrado competencia en este rol.' : 'No alcanzaste el objetivo. Practica más.'}
+        {passed ? tt('game.passed.desc') : tt('game.failed.desc')}
       </p>
 
       {/* Score */}
       <div className="mb-6">
         <div className="font-mono-game text-[10px] text-emerald-500/60 tracking-widest mb-1">
-          PUNTUACIÓN
+          {tt('game.score')}
         </div>
         <div className="font-mono-game text-5xl font-bold text-emerald-100">{score}</div>
         <div className="font-mono-game text-xs text-emerald-500/60 mt-1">
-          / {level.gameGoal} para aprobar
+          / {level.gameGoal} {tt('game.toapprove')}
         </div>
       </div>
 
@@ -281,7 +289,7 @@ function ResultCard({
       {passed && level.skills.length > 0 && (
         <div className="rounded-md border border-emerald-500/30 bg-emerald-500/5 p-3 mb-6">
           <div className="font-mono-game text-[10px] text-emerald-500/60 tracking-widest mb-2">
-            HABILIDADES DESBLOQUEADAS (+{level.skills.length})
+            {tt('game.skills.unlocked')} (+{level.skills.length})
           </div>
           <div className="flex flex-wrap gap-1.5 justify-center">
             {level.skills.slice(0, 6).map((sid) => (
@@ -298,7 +306,7 @@ function ResultCard({
                 variant="outline"
                 className="font-mono-game text-[10px] border-emerald-500/30 text-emerald-400/60"
               >
-                +{level.skills.length - 6} más
+                +{level.skills.length - 6} {tt('game.more')}
               </Badge>
             )}
           </div>
@@ -312,7 +320,7 @@ function ResultCard({
           variant="outline"
           className="flex-1 font-mono-game border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/10"
         >
-          <RotateCcw className="h-4 w-4 mr-1.5" /> Repetir
+          <RotateCcw className="h-4 w-4 mr-1.5" /> {tt('game.retry')}
         </Button>
         <Button
           onClick={onFinish}
@@ -320,7 +328,7 @@ function ResultCard({
             passed ? `${accent.fill} ${accent.fillHover} text-black` : 'bg-emerald-500/20 text-emerald-300'
           }`}
         >
-          Continuar <ChevronRight className="h-4 w-4 ml-1.5" />
+          {tt('game.continue')} <ChevronRight className="h-4 w-4 ml-1.5" />
         </Button>
       </div>
     </div>

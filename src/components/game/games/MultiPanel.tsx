@@ -4,34 +4,35 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, Layers } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
+import { useLang, useT } from '@/store/game-store';
 
 type PanelType = 'cpanel' | 'directadmin' | 'plesk' | 'vestapanel';
 
 interface ConfigTask {
   id: number;
-  label: string;
+  label: { es: string; en: string };
   panel: PanelType;
 }
 
 // Each task belongs to exactly one panel — but many tasks work on multiple panels.
 // For the game, we use the "canonical" panel for each task.
-const TASKS: { label: string; panel: PanelType }[] = [
-  { label: 'Crear cuenta de hosting', panel: 'cpanel' },
-  { label: 'WHM → Packages', panel: 'cpanel' },
-  { label: 'MultiPHP Manager', panel: 'cpanel' },
-  { label: 'Instalar WordPress', panel: 'cpanel' },
-  { label: 'Plugin reseller', panel: 'directadmin' },
-  { label: 'CustomBuild 2.0', panel: 'directadmin' },
-  { label: 'DNS Administration', panel: 'directadmin' },
-  { label: 'Crear cuenta reseller', panel: 'directadmin' },
-  { label: 'WordPress Toolkit', panel: 'plesk' },
-  { label: 'Configurar Mail Enable', panel: 'plesk' },
-  { label: 'Plesk File Manager', panel: 'plesk' },
-  { label: 'Subscription Settings', panel: 'plesk' },
-  { label: 'v-add-user', panel: 'vestapanel' },
-  { label: 'v-add-domain', panel: 'vestapanel' },
-  { label: 'Vesta CLI backup', panel: 'vestapanel' },
-  { label: 'v-list-web-domains', panel: 'vestapanel' },
+const TASKS: { label: { es: string; en: string }; panel: PanelType }[] = [
+  { label: { es: 'Crear cuenta de hosting', en: 'Create hosting account' }, panel: 'cpanel' },
+  { label: { es: 'WHM → Packages', en: 'WHM → Packages' }, panel: 'cpanel' },
+  { label: { es: 'MultiPHP Manager', en: 'MultiPHP Manager' }, panel: 'cpanel' },
+  { label: { es: 'Instalar WordPress', en: 'Install WordPress' }, panel: 'cpanel' },
+  { label: { es: 'Plugin reseller', en: 'Reseller plugin' }, panel: 'directadmin' },
+  { label: { es: 'CustomBuild 2.0', en: 'CustomBuild 2.0' }, panel: 'directadmin' },
+  { label: { es: 'DNS Administration', en: 'DNS Administration' }, panel: 'directadmin' },
+  { label: { es: 'Crear cuenta reseller', en: 'Create reseller account' }, panel: 'directadmin' },
+  { label: { es: 'WordPress Toolkit', en: 'WordPress Toolkit' }, panel: 'plesk' },
+  { label: { es: 'Configurar Mail Enable', en: 'Configure Mail Enable' }, panel: 'plesk' },
+  { label: { es: 'Plesk File Manager', en: 'Plesk File Manager' }, panel: 'plesk' },
+  { label: { es: 'Subscription Settings', en: 'Subscription Settings' }, panel: 'plesk' },
+  { label: { es: 'v-add-user', en: 'v-add-user' }, panel: 'vestapanel' },
+  { label: { es: 'v-add-domain', en: 'v-add-domain' }, panel: 'vestapanel' },
+  { label: { es: 'Vesta CLI backup', en: 'Vesta CLI backup' }, panel: 'vestapanel' },
+  { label: { es: 'v-list-web-domains', en: 'v-list-web-domains' }, panel: 'vestapanel' },
 ];
 
 const PANELS: { id: PanelType; name: string; color: string; bg: string; border: string; icon: string }[] = [
@@ -50,6 +51,8 @@ function buildQueue(): ConfigTask[] {
 }
 
 export default function MultiPanel({ onScore }: MiniGameProps) {
+  const lang = useLang();
+  const tt = useT();
   const [queue, setQueue] = useState<ConfigTask[]>(() => buildQueue());
   const [current, setCurrent] = useState<ConfigTask | null>(queue[0] ?? null);
   const [score, setScore] = useState(0);
@@ -118,22 +121,22 @@ export default function MultiPanel({ onScore }: MiniGameProps) {
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="rounded-md border border-emerald-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-emerald-500/60">CORRECTAS</span>
+            <span className="font-mono-game text-[10px] text-emerald-500/60">{tt('hud.correct')}</span>
             <div className="font-mono-game text-xl font-bold text-emerald-300">{score}/{TOTAL_TASKS}</div>
           </div>
           <div className="rounded-md border border-rose-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-rose-500/60">ERRORES</span>
+            <span className="font-mono-game text-[10px] text-rose-500/60">{tt('hud.wrong')}</span>
             <div className="font-mono-game text-xl font-bold text-rose-300">{wrong}/{MAX_WRONG}</div>
           </div>
         </div>
         <div className="font-mono-game text-[10px] text-emerald-500/60 flex items-center gap-1.5">
           <Layers className="h-3.5 w-3.5" />
-          INFRA: +20 servidores · +20,000 clientes
+          {lang === 'es' ? 'INFRA: +20 servidores · +20,000 clientes' : 'INFRA: +20 servers · +20,000 customers'}
         </div>
       </div>
 
       <div className="text-center text-[11px] font-mono-game text-emerald-500/60">
-        {'› Lee la tarea y haz click en el panel de control donde se ejecuta.'}
+        {tt('mp.instr')}
       </div>
 
       {/* Play area */}
@@ -141,7 +144,7 @@ export default function MultiPanel({ onScore }: MiniGameProps) {
         {/* Current task card */}
         <div className="flex flex-col items-center gap-4 mb-6">
           <div className="font-mono-game text-[10px] tracking-widest text-emerald-500/60">
-            TAREA #{Math.min(done + 1, TOTAL_TASKS)}
+            {tt('mp.tasknum')} #{Math.min(done + 1, TOTAL_TASKS)}
           </div>
           <AnimatePresence mode="wait">
             {current && (
@@ -153,9 +156,9 @@ export default function MultiPanel({ onScore }: MiniGameProps) {
                 transition={{ duration: 0.2 }}
                 className="max-w-md w-full rounded-lg border border-emerald-500/40 bg-emerald-500/5 p-4 text-center"
               >
-                <div className="font-mono-game text-[10px] text-emerald-500/60 mb-1">CONFIGURACIÓN SOLICITADA</div>
+                <div className="font-mono-game text-[10px] text-emerald-500/60 mb-1">{tt('mp.task')}</div>
                 <div className="font-mono-game text-base sm:text-lg font-bold text-emerald-100">
-                  {current.label}
+                  {current.label[lang]}
                 </div>
               </motion.div>
             )}

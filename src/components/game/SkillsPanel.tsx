@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Lock, Check } from 'lucide-react';
 import {
   JOB_LEVELS,
@@ -10,7 +10,7 @@ import {
   TOTAL_UNLOCKABLE_SKILLS,
 } from '@/lib/cv-data';
 import type { SkillCategory } from '@/lib/types';
-import { useGameStore } from '@/store/game-store';
+import { useGameStore, useLang, useT } from '@/store/game-store';
 import { Badge } from '@/components/ui/badge';
 
 const CATEGORY_ORDER: SkillCategory[] = [
@@ -28,6 +28,8 @@ const CATEGORY_ORDER: SkillCategory[] = [
 
 export default function SkillsPanel() {
   const results = useGameStore((s) => s.results);
+  const lang = useLang();
+  const tt = useT();
 
   // Compute unlocked skill set
   const unlocked = new Set<string>();
@@ -62,11 +64,9 @@ export default function SkillsPanel() {
         <div className="flex items-center justify-between gap-4 mb-3">
           <div>
             <h2 className="font-mono-game text-2xl sm:text-3xl font-bold text-emerald-200 glow-text">
-              Stack Técnico
+              {tt('skills.title')}
             </h2>
-            <p className="text-sm text-emerald-400/70 mt-1">
-              Completa niveles para desbloquear cada habilidad del CV.
-            </p>
+            <p className="text-sm text-emerald-400/70 mt-1">{tt('skills.desc')}</p>
           </div>
           <div className="text-right shrink-0">
             <div className="font-mono-game text-3xl font-bold text-emerald-300">
@@ -74,7 +74,7 @@ export default function SkillsPanel() {
               <span className="text-emerald-500/50 text-lg">/{TOTAL_UNLOCKABLE_SKILLS}</span>
             </div>
             <div className="font-mono-game text-[10px] text-emerald-500/60 tracking-widest">
-              SKILLS UNLOCKED · {pct}%
+              {tt('skills.unlocked')} · {pct}%
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function SkillsPanel() {
                 <div className="flex items-center gap-2">
                   <span className="text-lg">{CATEGORY_ICONS[cat]}</span>
                   <h3 className="font-mono-game text-sm font-bold text-emerald-200">
-                    {CATEGORY_LABELS[cat]}
+                    {CATEGORY_LABELS[cat][lang]}
                   </h3>
                 </div>
                 <Badge
@@ -144,7 +144,7 @@ export default function SkillsPanel() {
                   return (
                     <div
                       key={skill.id}
-                      title={skill.name}
+                      title={skill.name[lang]}
                       className={`group inline-flex items-center gap-1 rounded-md border px-2 py-1 font-mono-game text-[11px] transition-all ${
                         isUnlocked
                           ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20'
@@ -157,7 +157,7 @@ export default function SkillsPanel() {
                         <Lock className="h-2.5 w-2.5" />
                       )}
                       <span className={isUnlocked ? '' : 'blur-[2px] group-hover:blur-0 transition-all'}>
-                        {skill.name}
+                        {skill.name[lang]}
                       </span>
                     </div>
                   );
@@ -171,7 +171,7 @@ export default function SkillsPanel() {
       {/* Hint */}
       {unlockedCount === 0 && (
         <p className="text-center text-xs text-emerald-500/50 mt-8 font-mono-game">
-          {'› Completa el primer nivel para empezar a desbloquear habilidades.'}
+          {tt('skills.hint')}
         </p>
       )}
     </div>

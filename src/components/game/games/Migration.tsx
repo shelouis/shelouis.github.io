@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Server, ArrowRight, Gauge, Users, Database } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
+import { useLang, useT } from '@/store/game-store';
 
 interface Account {
   id: number;
@@ -30,6 +31,8 @@ const SIZE_META = {
 };
 
 export default function Migration({ onScore }: MiniGameProps) {
+  const lang = useLang();
+  const tt = useT();
   const [accounts, setAccounts] = useState<Account[]>(() =>
     CLIENT_NAMES.slice(0, TOTAL_ACCOUNTS).map((name, i) => ({
       id: i,
@@ -126,11 +129,11 @@ export default function Migration({ onScore }: MiniGameProps) {
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="rounded-md border border-emerald-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-emerald-500/60">MIGRADAS</span>
+            <span className="font-mono-game text-[10px] text-emerald-500/60">{tt('hud.migrated')}</span>
             <div className="font-mono-game text-xl font-bold text-emerald-300">{migratedCount}/{TOTAL_ACCOUNTS}</div>
           </div>
           <div className="rounded-md border border-amber-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-amber-500/60">TIEMPO</span>
+            <span className="font-mono-game text-[10px] text-amber-500/60">{tt('hud.time')}</span>
             <div className={`font-mono-game text-xl font-bold ${timeLeft <= 10 ? 'text-rose-400' : 'text-amber-300'}`}>
               {timeLeft}s
             </div>
@@ -138,7 +141,7 @@ export default function Migration({ onScore }: MiniGameProps) {
         </div>
         <div className="font-mono-game text-[10px] text-emerald-500/60 flex items-center gap-1.5">
           <Users className="h-3.5 w-3.5" />
-          +100 CLIENTES · SERED · cPanel + Installatron
+          {lang === 'es' ? '+100 CLIENTES · SERED · cPanel + Installatron' : '+100 CLIENTS · SERED · cPanel + Installatron'}
         </div>
       </div>
 
@@ -147,7 +150,7 @@ export default function Migration({ onScore }: MiniGameProps) {
         <div className="rounded-md border border-emerald-500/30 bg-black/40 p-2.5">
           <div className="flex items-center justify-between mb-1">
             <span className="font-mono-game text-[10px] text-emerald-500/60 flex items-center gap-1">
-              <Gauge className="h-3 w-3" /> UPTIME
+              <Gauge className="h-3 w-3" /> {tt('hud.uptime')}
             </span>
             <span className={`font-mono-game text-sm font-bold ${uptime < 50 ? 'text-rose-400' : uptime < 80 ? 'text-amber-300' : 'text-emerald-300'}`}>
               {uptime.toFixed(0)}%
@@ -163,7 +166,7 @@ export default function Migration({ onScore }: MiniGameProps) {
         <div className="rounded-md border border-emerald-500/30 bg-black/40 p-2.5">
           <div className="flex items-center justify-between mb-1">
             <span className="font-mono-game text-[10px] text-emerald-500/60 flex items-center gap-1">
-              <Database className="h-3 w-3" /> CARGA
+              <Database className="h-3 w-3" /> {tt('hud.load')}
             </span>
             <span className={`font-mono-game text-sm font-bold ${load > 30 ? 'text-rose-400' : 'text-emerald-300'}`}>
               {load}/60
@@ -177,12 +180,12 @@ export default function Migration({ onScore }: MiniGameProps) {
             {/* threshold marker */}
             <div className="absolute top-0 bottom-0 w-px bg-amber-400" style={{ left: '50%' }} title="safe threshold" />
           </div>
-          <div className="font-mono-game text-[9px] text-amber-500/60 mt-0.5">⚠ Límite seguro: 30</div>
+          <div className="font-mono-game text-[9px] text-amber-500/60 mt-0.5">{tt('mg.safe')} 30</div>
         </div>
       </div>
 
       <div className="text-center text-[11px] font-mono-game text-emerald-500/60">
-        {'› Click en cuentas para migrarlas. No sobrecargues el servidor o baja el uptime.'}
+        {tt('mg.instr')}
       </div>
 
       {/* Migration area */}
@@ -191,9 +194,9 @@ export default function Migration({ onScore }: MiniGameProps) {
         <div className="rounded-lg border border-rose-500/30 bg-black/50 p-3 overflow-hidden">
           <div className="flex items-center gap-2 mb-3 pb-2 border-b border-rose-500/20">
             <Server className="h-4 w-4 text-rose-400" />
-            <span className="font-mono-game text-xs text-rose-300">SERVIDOR ORIGEN</span>
+            <span className="font-mono-game text-xs text-rose-300">{tt('mg.source')}</span>
             <span className="ml-auto font-mono-game text-[10px] text-rose-500/60">
-              {pending.length} pendientes
+              {pending.length} {tt('mg.pending')}
             </span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-[300px] overflow-y-auto scroll-thin pr-1">
@@ -221,7 +224,7 @@ export default function Migration({ onScore }: MiniGameProps) {
             })}
             {pending.length === 0 && (
               <div className="col-span-full text-center font-mono-game text-xs text-emerald-500/50 py-8">
-                ✓ Todo migrado
+                {tt('mg.allmigrated')}
               </div>
             )}
           </div>
@@ -230,7 +233,7 @@ export default function Migration({ onScore }: MiniGameProps) {
         {/* Migration arrow / in-progress */}
         <div className="flex md:flex-col items-center justify-center gap-2 py-2">
           <div className="flex flex-col items-center gap-1">
-            <div className="font-mono-game text-[10px] text-cyan-300">EN TRÁNSITO</div>
+            <div className="font-mono-game text-[10px] text-cyan-300">{tt('mg.transit')}</div>
             <div className="flex flex-wrap gap-1 justify-center max-w-[120px]">
               <AnimatePresence>
                 {migrating.map((id) => {
@@ -259,9 +262,9 @@ export default function Migration({ onScore }: MiniGameProps) {
         <div className="rounded-lg border border-emerald-500/30 bg-black/50 p-3 overflow-hidden">
           <div className="flex items-center gap-2 mb-3 pb-2 border-b border-emerald-500/20">
             <Server className="h-4 w-4 text-emerald-400" />
-            <span className="font-mono-game text-xs text-emerald-300">SERVIDOR DESTINO</span>
+            <span className="font-mono-game text-xs text-emerald-300">{tt('mg.dest')}</span>
             <span className="ml-auto font-mono-game text-[10px] text-emerald-500/60">
-              {done.length} migradas
+              {done.length} {tt('mg.migrated.label')}
             </span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-[300px] overflow-y-auto scroll-thin pr-1">
@@ -290,7 +293,7 @@ export default function Migration({ onScore }: MiniGameProps) {
             </AnimatePresence>
             {done.length === 0 && (
               <div className="col-span-full text-center font-mono-game text-xs text-emerald-500/30 py-8">
-                {'› vacío'}
+                {tt('mg.empty')}
               </div>
             )}
           </div>

@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   Mail,
   Phone,
@@ -30,10 +28,12 @@ import {
   TOTAL_UNLOCKABLE_SKILLS,
 } from '@/lib/cv-data';
 import type { SkillCategory } from '@/lib/types';
-import { useGameStore } from '@/store/game-store';
+import { useGameStore, useLang, useT } from '@/store/game-store';
+import { t } from '@/lib/i18n';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { motion } from 'framer-motion';
 
 const CATEGORY_ORDER: SkillCategory[] = [
   'os',
@@ -52,6 +52,8 @@ export default function FinalCV() {
   const results = useGameStore((s) => s.results);
   const xp = useGameStore((s) => s.xp);
   const setScreen = useGameStore((s) => s.setScreen);
+  const lang = useLang();
+  const tt = useT();
 
   // unlocked skills
   const unlocked = new Set<string>();
@@ -88,7 +90,7 @@ export default function FinalCV() {
             <div className="sm:hidden">
               <h1 className="font-mono-game text-xl font-bold text-emerald-200">{PERSON.name}</h1>
               <p className="font-mono-game text-[10px] text-emerald-500/70 tracking-widest">
-                {PERSON.title}
+                {PERSON.title[lang]}
               </p>
             </div>
           </div>
@@ -99,7 +101,7 @@ export default function FinalCV() {
               {PERSON.name}
             </h1>
             <p className="hidden sm:block font-mono-game text-[11px] text-emerald-500/70 tracking-widest mt-1">
-              {PERSON.title}
+              {PERSON.title[lang]}
             </p>
             <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-3 text-xs">
               <a
@@ -123,17 +125,17 @@ export default function FinalCV() {
                 <Linkedin className="h-3.5 w-3.5" /> {PERSON.linkedinHandle}
               </a>
               <span className="flex items-center gap-1.5 text-emerald-400/70">
-                <MapPin className="h-3.5 w-3.5" /> {PERSON.country} · {PERSON.workMode}
+                <MapPin className="h-3.5 w-3.5" /> {PERSON.country[lang]} · {t(lang, `mode.${PERSON.workMode}`)}
               </span>
             </div>
             <p className="text-sm text-emerald-300/80 leading-relaxed mt-3 print:text-black">
-              {PERSON.summary}
+              {PERSON.summary[lang]}
             </p>
             <div className="mt-3 rounded-md border border-emerald-500/20 bg-emerald-500/5 p-2.5">
               <span className="font-mono-game text-[10px] text-emerald-500/60 tracking-widest">
-                OBJETIVO PROFESIONAL
+                {tt('cv.objective')}
               </span>
-              <p className="text-xs text-emerald-200/90 mt-1">{PERSON.goal}</p>
+              <p className="text-xs text-emerald-200/90 mt-1">{PERSON.goal[lang]}</p>
             </div>
           </div>
 
@@ -163,7 +165,7 @@ export default function FinalCV() {
 
         {/* Tags */}
         <div className="px-5 sm:px-6 pb-4 flex flex-wrap gap-1.5">
-          {PERSON.tags.map((tag) => (
+          {PERSON.tags[lang].map((tag) => (
             <Badge
               key={tag}
               variant="outline"
@@ -182,14 +184,14 @@ export default function FinalCV() {
           variant="outline"
           className="font-mono-game border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/10"
         >
-          <Briefcase className="h-4 w-4 mr-1.5" /> Volver al Mapa
+          <Briefcase className="h-4 w-4 mr-1.5" /> {tt('cv.back')}
         </Button>
         <Button
           onClick={handlePrint}
           variant="outline"
           className="font-mono-game border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/10"
         >
-          <Download className="h-4 w-4 mr-1.5" /> Imprimir / Guardar PDF
+          <Download className="h-4 w-4 mr-1.5" /> {tt('cv.print')}
         </Button>
         <a
           href={PERSON.linkedin}
@@ -201,7 +203,7 @@ export default function FinalCV() {
           <ExternalLink className="h-3 w-3 ml-0.5" />
         </a>
         <span className="ml-auto font-mono-game text-[10px] text-emerald-500/50">
-          {`› ${completedCount}/${JOB_LEVELS.length} niveles completados`}
+          {`› ${completedCount}/${JOB_LEVELS.length} ${tt('cv.levels.done')}`}
         </span>
       </div>
 
@@ -212,32 +214,32 @@ export default function FinalCV() {
             value="experience"
             className="font-mono-game text-xs data-[state=active]:bg-emerald-500/15 data-[state=active]:text-emerald-300"
           >
-            Experiencia
+            {tt('cv.experience')}
           </TabsTrigger>
           <TabsTrigger
             value="skills"
             className="font-mono-game text-xs data-[state=active]:bg-emerald-500/15 data-[state=active]:text-emerald-300"
           >
-            Skills ({unlockedCount})
+            {tt('cv.skills')} ({unlockedCount})
           </TabsTrigger>
           <TabsTrigger
             value="education"
             className="font-mono-game text-xs data-[state=active]:bg-emerald-500/15 data-[state=active]:text-emerald-300"
           >
-            Educación
+            {tt('cv.education')}
           </TabsTrigger>
           <TabsTrigger
             value="achievements"
             className="font-mono-game text-xs data-[state=active]:bg-emerald-500/15 data-[state=active]:text-emerald-300"
           >
-            Logros
+            {tt('cv.achievements')}
           </TabsTrigger>
         </TabsList>
 
         {/* Experience */}
         <TabsContent value="experience" className="mt-4 space-y-3 print:block">
           <h2 className="font-mono-game text-sm font-bold text-emerald-300 mb-3 flex items-center gap-2 print:text-black">
-            <Briefcase className="h-4 w-4" /> EXPERIENCIA LABORAL
+            <Briefcase className="h-4 w-4" /> {tt('cv.exp.header')}
           </h2>
           {JOB_LEVELS.map((level) => {
             const result = results[level.id];
@@ -254,8 +256,12 @@ export default function FinalCV() {
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className={`font-mono-game text-sm font-bold ${isUnlocked ? 'text-emerald-200' : 'text-emerald-500/60'}`}>
-                        {level.role}
+                      <h3
+                        className={`font-mono-game text-sm font-bold ${
+                          isUnlocked ? 'text-emerald-200' : 'text-emerald-500/60'
+                        }`}
+                      >
+                        {level.role[lang]}
                       </h3>
                       {!isUnlocked && <Lock className="h-3 w-3 text-emerald-500/50" />}
                       {isUnlocked && (
@@ -271,34 +277,34 @@ export default function FinalCV() {
                         </div>
                       )}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-emerald-400/70 mt-0.5">
+                    <div className="flex items-center gap-2 text-xs text-emerald-400/70 mt-0.5 flex-wrap">
                       <span className="font-semibold">{level.company}</span>
                       <span>·</span>
                       <span className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> {level.location}
+                        <MapPin className="h-3 w-3" /> {level.location[lang]}
                       </span>
                       <span>·</span>
-                      <span className="font-mono-game text-[10px]">{level.mode}</span>
+                      <span className="font-mono-game text-[10px]">{t(lang, `mode.${level.mode}`)}</span>
                     </div>
                   </div>
                   <div className="text-right shrink-0">
                     <div className="font-mono-game text-[10px] text-emerald-500/70 flex items-center gap-1 justify-end">
-                      <Calendar className="h-3 w-3" /> {level.period}
+                      <Calendar className="h-3 w-3" /> {level.period[lang]}
                     </div>
                     <div className="font-mono-game text-[10px] text-emerald-500/50 mt-0.5">
-                      {level.durationYears} años
+                      {level.durationYears} {tt('cv.years')}
                     </div>
                   </div>
                 </div>
 
                 {isUnlocked ? (
                   <>
-                    <p className="text-xs text-emerald-300/80 leading-relaxed mb-2">{level.summary}</p>
+                    <p className="text-xs text-emerald-300/80 leading-relaxed mb-2">{level.summary[lang]}</p>
                     <ul className="space-y-1">
                       {level.achievements.map((a, i) => (
                         <li key={i} className="flex items-start gap-1.5 text-xs text-emerald-200/85">
                           <span className="text-emerald-400 mt-0.5">▸</span>
-                          <span>{a}</span>
+                          <span>{a[lang]}</span>
                         </li>
                       ))}
                     </ul>
@@ -312,7 +318,7 @@ export default function FinalCV() {
                             variant="outline"
                             className="font-mono-game text-[9px] border-emerald-500/30 text-emerald-300 bg-emerald-500/5"
                           >
-                            {skill.name}
+                            {skill.name[lang]}
                           </Badge>
                         );
                       })}
@@ -322,7 +328,7 @@ export default function FinalCV() {
                   <div className="rounded-md border border-emerald-500/10 bg-black/30 p-3 text-center">
                     <Lock className="h-4 w-4 text-emerald-500/40 mx-auto mb-1" />
                     <p className="font-mono-game text-xs text-emerald-500/60">
-                      Completa el Nivel {level.index} en el juego para desbloquear esta sección.
+                      {tt('cv.locked')} {level.index} {tt('cv.ingame')}
                     </p>
                   </div>
                 )}
@@ -339,21 +345,21 @@ export default function FinalCV() {
         {/* Education */}
         <TabsContent value="education" className="mt-4 space-y-3">
           <h2 className="font-mono-game text-sm font-bold text-emerald-300 mb-3 flex items-center gap-2">
-            <GraduationCap className="h-4 w-4" /> EDUCACIÓN
+            <GraduationCap className="h-4 w-4" /> {tt('cv.edu.header')}
           </h2>
           {EDUCATION.map((edu, i) => (
             <div key={i} className="panel rounded-lg p-4">
-              <h3 className="font-mono-game text-sm font-bold text-emerald-200">{edu.title}</h3>
-              <div className="text-xs text-emerald-400/70 mt-0.5">{edu.institution}</div>
+              <h3 className="font-mono-game text-sm font-bold text-emerald-200">{edu.title[lang]}</h3>
+              <div className="text-xs text-emerald-400/70 mt-0.5">{edu.institution[lang]}</div>
               <div className="font-mono-game text-[10px] text-emerald-500/60 mt-1 flex items-center gap-1">
-                <Calendar className="h-3 w-3" /> {edu.period}
+                <Calendar className="h-3 w-3" /> {edu.period[lang]}
               </div>
-              <p className="text-xs text-emerald-300/80 mt-2">{edu.detail}</p>
+              <p className="text-xs text-emerald-300/80 mt-2">{edu.detail[lang]}</p>
             </div>
           ))}
 
           <h2 className="font-mono-game text-sm font-bold text-emerald-300 mt-6 mb-3 flex items-center gap-2">
-            <Award className="h-4 w-4" /> CERTIFICACIONES
+            <Award className="h-4 w-4" /> {tt('cv.cert.header')}
           </h2>
           {CERTIFICATIONS.map((cert, i) => (
             <div key={i} className="panel rounded-lg p-3 flex items-center gap-3">
@@ -361,7 +367,7 @@ export default function FinalCV() {
                 <Award className="h-4 w-4 text-amber-400" />
               </div>
               <div>
-                <div className="text-sm font-semibold text-emerald-100">{cert.name}</div>
+                <div className="text-sm font-semibold text-emerald-100">{cert.name[lang]}</div>
                 <div className="font-mono-game text-[10px] text-emerald-500/60">{cert.issuer}</div>
               </div>
             </div>
@@ -382,17 +388,17 @@ export default function FinalCV() {
       {/* Footer */}
       <div className="mt-10 text-center">
         <p className="font-mono-game text-[10px] text-emerald-500/50">
-          {`› CV interactivo generado por SYSADMIN_QUEST · ${PERSON.name} · ${new Date().getFullYear()}`}
+          {`› ${tt('cv.footer')} · ${PERSON.name} · ${new Date().getFullYear()}`}
         </p>
-        <p className="font-mono-game text-[10px] text-emerald-500/40 mt-1">
-          Juega los 7 niveles para desbloquear el CV completo y todas las habilidades.
-        </p>
+        <p className="font-mono-game text-[10px] text-emerald-500/40 mt-1">{tt('cv.footer2')}</p>
       </div>
     </div>
   );
 }
 
 function SkillsSection({ unlocked }: { unlocked: Set<string> }) {
+  const lang = useLang();
+  const tt = useT();
   const grouped: Record<SkillCategory, typeof SKILLS> = {
     os: [],
     cloud: [],
@@ -412,7 +418,7 @@ function SkillsSection({ unlocked }: { unlocked: Set<string> }) {
   return (
     <div className="space-y-4">
       <h2 className="font-mono-game text-sm font-bold text-emerald-300 flex items-center gap-2">
-        <Globe className="h-4 w-4" /> STACK TÉCNICO COMPLETO
+        <Globe className="h-4 w-4" /> {tt('cv.skills.header')}
       </h2>
       <div className="grid gap-3 sm:grid-cols-2">
         {CATEGORY_ORDER.map((cat) => {
@@ -424,7 +430,7 @@ function SkillsSection({ unlocked }: { unlocked: Set<string> }) {
                 <div className="flex items-center gap-2">
                   <span>{CATEGORY_ICONS[cat]}</span>
                   <h3 className="font-mono-game text-xs font-bold text-emerald-200">
-                    {CATEGORY_LABELS[cat]}
+                    {CATEGORY_LABELS[cat][lang]}
                   </h3>
                 </div>
                 <Badge
@@ -447,7 +453,7 @@ function SkillsSection({ unlocked }: { unlocked: Set<string> }) {
                       }`}
                     >
                       {isUnlocked ? <Check className="h-2.5 w-2.5" /> : <Lock className="h-2.5 w-2.5" />}
-                      {skill.name}
+                      {skill.name[lang]}
                     </span>
                   );
                 })}
@@ -471,21 +477,25 @@ function AchievementsSection({
   totalStars: number;
   xp: number;
 }) {
+  const lang = useLang();
+  const tt = useT();
+  const lvl8Done = useGameStore((s) => !!s.results['lvl-8']);
   const achievements = [
-    { id: 'first-blood', name: 'Primer Ticket', desc: 'Completa tu primer nivel', icon: '🎫', unlocked: completedCount >= 1 },
-    { id: 'halfway', name: 'Mitad de Carrera', desc: 'Completa 4 niveles', icon: '⚖️', unlocked: completedCount >= 4 },
-    { id: 'sysadmin', name: 'Sysadmin Real', desc: 'Completa todos los niveles', icon: '🛡️', unlocked: completedCount >= JOB_LEVELS.length },
-    { id: 'skill-collector', name: 'Colecionista de Skills', desc: 'Desbloquea 30+ habilidades', icon: '⚙️', unlocked: unlockedCount >= 30 },
-    { id: 'completionist', name: 'Stack Completo', desc: 'Desbloquea TODAS las habilidades', icon: '🌟', unlocked: unlockedCount >= TOTAL_UNLOCKABLE_SKILLS },
-    { id: 'three-stars', name: 'Perfeccionista', desc: 'Consigue 15+ estrellas', icon: '⭐', unlocked: totalStars >= 15 },
-    { id: 'xp-1k', name: 'Veterano', desc: 'Acumula 1000+ XP', icon: '🏆', unlocked: xp >= 1000 },
-    { id: 'xp-2k', name: 'Leyenda DevOps', desc: 'Acumula 2000+ XP', icon: '👑', unlocked: xp >= 2000 },
+    { id: 'first-blood', key: 'ach.first', unlocked: completedCount >= 1, icon: '🎫' },
+    { id: 'halfway', key: 'ach.half', unlocked: completedCount >= 4, icon: '⚖️' },
+    { id: 'sysadmin', key: 'ach.sysadmin', unlocked: completedCount >= JOB_LEVELS.length, icon: '🛡️' },
+    { id: 'skill-collector', key: 'ach.collector', unlocked: unlockedCount >= 35, icon: '⚙️' },
+    { id: 'fullstack', key: 'ach.fullstack', unlocked: unlockedCount >= TOTAL_UNLOCKABLE_SKILLS, icon: '🌟' },
+    { id: 'three-stars', key: 'ach.perfect', unlocked: totalStars >= 18, icon: '⭐' },
+    { id: 'xp-1k', key: 'ach.vet', unlocked: xp >= 1000, icon: '🏆' },
+    { id: 'xp-2k', key: 'ach.legend', unlocked: xp >= 2000, icon: '👑' },
+    { id: 'prompt', key: 'ach.prompt', unlocked: lvl8Done, icon: '🤖' },
   ];
 
   return (
     <div className="space-y-4">
       <h2 className="font-mono-game text-sm font-bold text-emerald-300 flex items-center gap-2">
-        <Trophy className="h-4 w-4" /> LOGROS DESBLOQUEADOS
+        <Trophy className="h-4 w-4" /> {tt('cv.ach.header')}
       </h2>
       <div className="grid gap-2 sm:grid-cols-2">
         {achievements.map((a) => (
@@ -505,10 +515,14 @@ function AchievementsSection({
               {a.unlocked ? a.icon : '🔒'}
             </div>
             <div className="flex-1 min-w-0">
-              <div className={`font-mono-game text-xs font-bold ${a.unlocked ? 'text-amber-300' : 'text-emerald-500/60'}`}>
-                {a.name}
+              <div
+                className={`font-mono-game text-xs font-bold ${
+                  a.unlocked ? 'text-amber-300' : 'text-emerald-500/60'
+                }`}
+              >
+                {t(lang, `${a.key}`)}
               </div>
-              <div className="text-[11px] text-emerald-400/70">{a.desc}</div>
+              <div className="text-[11px] text-emerald-400/70">{t(lang, `${a.key}.desc`)}</div>
             </div>
             {a.unlocked && <Check className="h-4 w-4 text-emerald-400" />}
           </div>

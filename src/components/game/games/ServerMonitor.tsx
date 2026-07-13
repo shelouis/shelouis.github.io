@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Server, AlertTriangle, Zap, Activity } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
+import { useLang, useT } from '@/store/game-store';
 
 type Status = 'ok' | 'warn' | 'critical' | 'fixing' | 'fixed';
 
@@ -23,7 +24,14 @@ const SERVER_LABELS = [
   'ftp-01', 'app-01', 'cache-01',
 ];
 
+const STATUS_TEXT: Record<string, { ok: string; warn: string; critical: string }> = {
+  es: { ok: 'OK', warn: 'WARN', critical: 'CRIT' },
+  en: { ok: 'OK', warn: 'WARN', critical: 'CRIT' },
+};
+
 export default function ServerMonitor({ onScore }: MiniGameProps) {
+  const lang = useLang();
+  const tt = useT();
   const [servers, setServers] = useState<ServerNode[]>(() =>
     SERVER_LABELS.map((label, i) => ({ id: i, label, status: 'ok' as Status, warnSince: 0 })),
   );
@@ -145,11 +153,11 @@ export default function ServerMonitor({ onScore }: MiniGameProps) {
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="rounded-md border border-emerald-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-emerald-500/60">REPARADAS</span>
+            <span className="font-mono-game text-[10px] text-emerald-500/60">{tt('hud.repaired')}</span>
             <div className="font-mono-game text-xl font-bold text-emerald-300">{score}</div>
           </div>
           <div className="rounded-md border border-amber-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-amber-500/60">TIEMPO</span>
+            <span className="font-mono-game text-[10px] text-amber-500/60">{tt('hud.time')}</span>
             <div className={`font-mono-game text-xl font-bold ${timeLeft <= 10 ? 'text-rose-400' : 'text-amber-300'}`}>
               {timeLeft}s
             </div>
@@ -157,7 +165,7 @@ export default function ServerMonitor({ onScore }: MiniGameProps) {
         </div>
         <div className="rounded-md border border-emerald-500/30 bg-black/40 px-3 py-1.5 min-w-[180px]">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-mono-game text-[10px] text-emerald-500/60">UPTIME</span>
+            <span className="font-mono-game text-[10px] text-emerald-500/60">{tt('hud.uptime')}</span>
             <span className={`font-mono-game text-sm font-bold ${uptime < 50 ? 'text-rose-400' : 'text-emerald-300'}`}>
               {uptime.toFixed(0)}%
             </span>
@@ -173,16 +181,16 @@ export default function ServerMonitor({ onScore }: MiniGameProps) {
       </div>
 
       <div className="text-center text-[11px] font-mono-game text-emerald-500/60">
-        {'› Click en ámbar (+2) antes de que pase a rojo (+1). Servidores en rojo bajan el uptime.'}
+        {tt('sm.instr')}
       </div>
 
       {/* Play area */}
       <div className="relative w-full rounded-lg border border-emerald-500/30 bg-black/50 p-4 overflow-hidden grid-bg">
         <div className="flex items-center gap-2 mb-3 pb-2 border-b border-emerald-500/20">
           <Activity className="h-4 w-4 text-emerald-400" />
-          <span className="font-mono-game text-xs text-emerald-300">ZABBIX_DASHBOARD — Flota VenezuelaHosting</span>
+          <span className="font-mono-game text-xs text-emerald-300">ZABBIX_DASHBOARD — {tt('sm.dash')}</span>
           <span className="ml-auto font-mono-game text-[10px] text-emerald-500/60">
-            7 servidores · 2 nodos VPS · +5,000 cuentas
+            {tt('sm.servers.note')}
           </span>
         </div>
 
@@ -221,7 +229,7 @@ export default function ServerMonitor({ onScore }: MiniGameProps) {
                     : 'text-emerald-300'
                 }`}
               >
-                {s.status === 'ok' ? 'OK' : s.status === 'warn' ? 'WARN' : s.status === 'critical' ? 'CRIT' : 'OK'}
+                {s.status === 'ok' ? STATUS_TEXT[lang].ok : s.status === 'warn' ? STATUS_TEXT[lang].warn : s.status === 'critical' ? STATUS_TEXT[lang].critical : STATUS_TEXT[lang].ok}
               </span>
               {(s.status === 'warn' || s.status === 'critical') && (
                 <AlertTriangle

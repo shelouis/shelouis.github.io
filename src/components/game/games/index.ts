@@ -10,6 +10,7 @@ const TeamRouter = dynamic(() => import('./TeamRouter'), { ssr: false });
 const PipelineBuilder = dynamic(() => import('./PipelineBuilder'), { ssr: false });
 const BugHunter = dynamic(() => import('./BugHunter'), { ssr: false });
 const Migration = dynamic(() => import('./Migration'), { ssr: false });
+const PromptArchitect = dynamic(() => import('./PromptArchitect'), { ssr: false });
 
 export const GAME_REGISTRY: Record<GameId, React.ComponentType<{ onScore: (n: number) => void; onFinish: () => void }>> = {
   'ticket-triage': TicketTriage,
@@ -19,4 +20,5 @@ export const GAME_REGISTRY: Record<GameId, React.ComponentType<{ onScore: (n: nu
   'pipeline-builder': PipelineBuilder,
   'bug-hunter': BugHunter,
   migration: Migration,
+  'prompt-architect': PromptArchitect,
 };

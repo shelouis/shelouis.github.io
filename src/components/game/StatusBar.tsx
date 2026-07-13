@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Trophy, Map, FileText, Home, RotateCcw } from 'lucide-react';
-import { useGameStore } from '@/store/game-store';
-import { JOB_LEVELS, PERSON, TOTAL_UNLOCKABLE_SKILLS, SKILLS } from '@/lib/cv-data';
+import { Trophy, Map, FileText, RotateCcw, Unlock, Lock } from 'lucide-react';
+import { useGameStore, useLang, useT } from '@/store/game-store';
+import { JOB_LEVELS, PERSON, TOTAL_UNLOCKABLE_SKILLS } from '@/lib/cv-data';
+import { t } from '@/lib/i18n';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,6 +17,8 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 export default function StatusBar() {
   const screen = useGameStore((s) => s.screen);
@@ -23,11 +26,14 @@ export default function StatusBar() {
   const xp = useGameStore((s) => s.xp);
   const results = useGameStore((s) => s.results);
   const reset = useGameStore((s) => s.reset);
+  const lang = useLang();
+  const tt = useT();
+  const unlockedMode = useGameStore((s) => s.unlockedMode);
+  const setUnlockedMode = useGameStore((s) => s.setUnlockedMode);
 
   const completedCount = Object.keys(results).length;
   const totalLevels = JOB_LEVELS.length;
 
-  // unlocked skills count
   const unlockedSkillIds = new Set<string>();
   for (const lvl of JOB_LEVELS) {
     if (results[lvl.id]) lvl.skills.forEach((s) => unlockedSkillIds.add(s));
@@ -44,7 +50,7 @@ export default function StatusBar() {
         <button
           onClick={() => setScreen('map')}
           className="flex items-center gap-2 group shrink-0"
-          aria-label="Ir al mapa"
+          aria-label={tt('nav.map')}
         >
           <span className="relative flex h-8 w-8 items-center justify-center rounded bg-emerald-500/15 border border-emerald-500/40 glow-soft">
             <span className="font-mono-game text-emerald-300 font-bold text-sm">JP</span>
@@ -72,7 +78,8 @@ export default function StatusBar() {
         <div className="flex-1 min-w-0 hidden md:block">
           <div className="flex items-center justify-between mb-1">
             <span className="font-mono-game text-[11px] text-emerald-500/70">
-              CARRERA: {completedCount}/{totalLevels} · SKILLS: {unlockedSkillCount}/{TOTAL_UNLOCKABLE_SKILLS}
+              {t(lang, 'status.career')}: {completedCount}/{totalLevels} ·{' '}
+              {t(lang, 'status.skills')}: {unlockedSkillCount}/{TOTAL_UNLOCKABLE_SKILLS}
             </span>
             <span className="font-mono-game text-[11px] text-emerald-400/80">{skillPct}%</span>
           </div>
@@ -86,19 +93,42 @@ export default function StatusBar() {
           </div>
         </div>
 
+        {/* Unlocked mode toggle */}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex items-center gap-1.5 rounded-md border border-emerald-500/20 bg-black/40 px-2 py-1.5 cursor-pointer">
+                {unlockedMode ? (
+                  <Unlock className="h-3.5 w-3.5 text-amber-400" />
+                ) : (
+                  <Lock className="h-3.5 w-3.5 text-emerald-500/50" />
+                )}
+                <Switch
+                  checked={unlockedMode}
+                  onCheckedChange={setUnlockedMode}
+                  className="scale-75 origin-center"
+                />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="font-mono-game text-xs">
+              {t(lang, 'lang.unlocked')}: {unlockedMode ? t(lang, 'lang.unlocked.on') : t(lang, 'lang.unlocked.off')}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         {/* Nav buttons */}
         <div className="flex items-center gap-1.5 ml-auto">
           <NavButton
             active={screen === 'map'}
             onClick={() => setScreen('map')}
             icon={<Map className="h-4 w-4" />}
-            label="Mapa"
+            label={tt('nav.map')}
           />
           <NavButton
             active={screen === 'cv'}
             onClick={() => setScreen('cv')}
             icon={<FileText className="h-4 w-4" />}
-            label="CV"
+            label={tt('nav.cv')}
             highlight={allDone}
           />
           <AlertDialog>
@@ -107,31 +137,31 @@ export default function StatusBar() {
                 variant="ghost"
                 size="sm"
                 className="h-8 w-8 sm:w-auto sm:px-3 p-0 text-emerald-500/70 hover:text-rose-400 hover:bg-rose-500/10"
-                aria-label="Reiniciar"
+                aria-label={tt('nav.reset')}
               >
                 <RotateCcw className="h-4 w-4" />
-                <span className="hidden sm:inline ml-1.5 font-mono-game text-xs">Reset</span>
+                <span className="hidden sm:inline ml-1.5 font-mono-game text-xs">{tt('nav.reset')}</span>
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent className="panel-solid border-emerald-500/30">
               <AlertDialogHeader>
-                <AlertDialogTitle className="text-emerald-200">¿Reiniciar progreso?</AlertDialogTitle>
+                <AlertDialogTitle className="text-emerald-200">{t(lang, 'reset.title')}</AlertDialogTitle>
                 <AlertDialogDescription className="text-emerald-400/70">
-                  Se borrarán todos los niveles completados, XP y habilidades desbloqueadas. Esta acción no se puede deshacer.
+                  {t(lang, 'reset.desc')}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel className="border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10">
-                  Cancelar
+                  {t(lang, 'reset.cancel')}
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => {
                     reset();
-                    setScreen('boot');
+                    setScreen('lang');
                   }}
                   className="bg-rose-500 hover:bg-rose-400 text-white"
                 >
-                  Sí, reiniciar
+                  {t(lang, 'reset.confirm')}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

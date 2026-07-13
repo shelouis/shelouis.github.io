@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GitBranch, Check, X, Workflow, ArrowRight } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
+import { useLang, useT } from '@/store/game-store';
 
 type Stage = 'source' | 'build' | 'test' | 'deploy';
 
@@ -17,11 +18,11 @@ interface Tool {
   border: string;
 }
 
-const STAGES: { id: Stage; label: string; description: string; color: string; activeBorder: string }[] = [
-  { id: 'source', label: 'SOURCE', description: 'Repositorio de código', color: 'text-violet-300', activeBorder: 'border-violet-500/60' },
-  { id: 'build', label: 'BUILD', description: 'Construcción de artefacto', color: 'text-cyan-300', activeBorder: 'border-cyan-500/60' },
-  { id: 'test', label: 'TEST', description: 'Pruebas automatizadas', color: 'text-amber-300', activeBorder: 'border-amber-500/60' },
-  { id: 'deploy', label: 'DEPLOY', description: 'Despliegue a producción', color: 'text-emerald-300', activeBorder: 'border-emerald-500/60' },
+const STAGES: { id: Stage; label: string; description: { es: string; en: string }; color: string; activeBorder: string }[] = [
+  { id: 'source', label: 'SOURCE', description: { es: 'Repositorio de código', en: 'Code repository' }, color: 'text-violet-300', activeBorder: 'border-violet-500/60' },
+  { id: 'build', label: 'BUILD', description: { es: 'Construcción de artefacto', en: 'Artifact build' }, color: 'text-cyan-300', activeBorder: 'border-cyan-500/60' },
+  { id: 'test', label: 'TEST', description: { es: 'Pruebas automatizadas', en: 'Automated tests' }, color: 'text-amber-300', activeBorder: 'border-amber-500/60' },
+  { id: 'deploy', label: 'DEPLOY', description: { es: 'Despliegue a producción', en: 'Production deploy' }, color: 'text-emerald-300', activeBorder: 'border-emerald-500/60' },
 ];
 
 const TOOLS: Tool[] = [
@@ -40,6 +41,8 @@ const TOOLS: Tool[] = [
 const MAX_WRONG = 4;
 
 export default function PipelineBuilder({ onScore }: MiniGameProps) {
+  const lang = useLang();
+  const tt = useT();
   const [available, setAvailable] = useState<Tool[]>(() => [...TOOLS].sort(() => Math.random() - 0.5));
   const [placed, setPlaced] = useState<Record<Stage, Tool[]>>({ source: [], build: [], test: [], deploy: [] });
   const [score, setScore] = useState(0);
@@ -100,11 +103,11 @@ export default function PipelineBuilder({ onScore }: MiniGameProps) {
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="rounded-md border border-emerald-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-emerald-500/60">COLOCADOS</span>
+            <span className="font-mono-game text-[10px] text-emerald-500/60">{tt('hud.placed')}</span>
             <div className="font-mono-game text-xl font-bold text-emerald-300">{totalPlaced}/{totalToPlace}</div>
           </div>
           <div className="rounded-md border border-rose-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-rose-500/60">ERRORES</span>
+            <span className="font-mono-game text-[10px] text-rose-500/60">{tt('hud.errors')}</span>
             <div className="font-mono-game text-xl font-bold text-rose-300">{wrong}/{MAX_WRONG}</div>
           </div>
         </div>
@@ -115,7 +118,7 @@ export default function PipelineBuilder({ onScore }: MiniGameProps) {
       </div>
 
       <div className="text-center text-[11px] font-mono-game text-emerald-500/60">
-        {'› Selecciona una herramienta, luego haz click en la etapa del pipeline donde corresponde.'}
+        {tt('pb.instr')}
       </div>
 
       {/* Selected tool indicator */}
@@ -127,7 +130,8 @@ export default function PipelineBuilder({ onScore }: MiniGameProps) {
             exit={{ opacity: 0, y: -5 }}
             className="text-center font-mono-game text-xs text-violet-300"
           >
-            → Colocando <span className="font-bold">{selectedTool.name}</span>... click en una etapa
+            → {tt('pb.placing')} <span className="font-bold">{selectedTool.name}</span>
+            {tt('pb.clickstage')}
           </motion.div>
         )}
       </AnimatePresence>
@@ -172,7 +176,7 @@ export default function PipelineBuilder({ onScore }: MiniGameProps) {
                   ))}
                   {placed[stage.id].length === 0 && (
                     <div className="text-center font-mono-game text-[9px] text-emerald-500/30 py-3">
-                      vacío
+                      {tt('pb.empty')}
                     </div>
                   )}
                 </div>
@@ -188,11 +192,11 @@ export default function PipelineBuilder({ onScore }: MiniGameProps) {
       {/* Available tools */}
       <div className="rounded-lg border border-emerald-500/30 bg-black/40 p-3">
         <div className="font-mono-game text-[10px] text-emerald-500/60 tracking-widest mb-2">
-          HERRAMIENTAS DISPONIBLES
+          {tt('pb.tools')}
         </div>
         <div className="flex flex-wrap gap-2">
           {available.length === 0 && (
-            <span className="font-mono-game text-xs text-emerald-500/50">✓ Todas colocadas</span>
+            <span className="font-mono-game text-xs text-emerald-500/50">{tt('pb.allplaced')}</span>
           )}
           {available.map((tool) => {
             const isSelected = selectedTool?.id === tool.id;

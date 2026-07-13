@@ -1,6 +1,10 @@
 // Core type definitions for the SysAdmin Quest game
 
-export type Screen = 'boot' | 'map' | 'game' | 'cv';
+import type { Lang } from './i18n';
+
+export type Screen = 'lang' | 'boot' | 'map' | 'game' | 'cv';
+
+export type WorkMode = 'remote' | 'hybrid' | 'freelance';
 
 export type SkillCategory =
   | 'os'
@@ -16,30 +20,31 @@ export type SkillCategory =
 
 export interface Skill {
   id: string;
-  name: string;
   category: SkillCategory;
   icon?: string;
 }
+
+export type Bi = { es: string; en: string };
 
 export interface JobLevel {
   id: string;
   index: number;
   company: string;
-  role: string;
-  location: string;
-  mode: 'Remoto' | 'Híbrido' | 'Freelance';
-  period: string;
+  role: Bi;
+  location: Bi;
+  mode: WorkMode;
+  period: Bi;
   startDate: string;
   endDate: string;
   durationYears: number;
-  summary: string;
-  achievements: string[];
+  summary: Bi;
+  achievements: Bi[];
   skills: string[]; // skill ids unlocked by completing this level
   gameId: GameId;
-  gameTitle: string;
-  gameDescription: string;
+  gameTitle: Bi;
+  gameDescription: Bi;
   gameGoal: number; // target score to "complete"
-  accent: string; // tailwind color name, e.g. 'emerald'
+  accent: string; // accent name, e.g. 'emerald'
 }
 
 export type GameId =
@@ -49,7 +54,8 @@ export type GameId =
   | 'team-router'
   | 'pipeline-builder'
   | 'bug-hunter'
-  | 'migration';
+  | 'migration'
+  | 'prompt-architect';
 
 export interface LevelResult {
   score: number;
@@ -63,13 +69,16 @@ export interface GameState {
   currentLevelId: string | null;
   xp: number;
   results: Record<string, LevelResult>;
-  // boot
   booted: boolean;
+  lang: Lang;
+  unlockedMode: boolean;
   // actions
   setScreen: (s: Screen) => void;
   setCurrentLevel: (id: string | null) => void;
   completeLevel: (levelId: string, score: number) => void;
   addXp: (amount: number) => void;
   setBooted: (v: boolean) => void;
+  setLang: (l: Lang) => void;
+  setUnlockedMode: (v: boolean) => void;
   reset: () => void;
 }

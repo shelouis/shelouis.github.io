@@ -1,7 +1,7 @@
 // Static accent class maps so Tailwind can detect them at build time.
 // DO NOT use template literals like `bg-${accent}-500` — they break Tailwind's purge.
 
-export type AccentName = 'emerald' | 'amber' | 'cyan' | 'rose' | 'violet' | 'orange';
+export type AccentName = 'emerald' | 'amber' | 'cyan' | 'rose' | 'violet' | 'orange' | 'fuchsia';
 
 export interface AccentClasses {
   text: string;
@@ -102,6 +102,20 @@ export const ACCENTS: Record<AccentName, AccentClasses> = {
     glow: 'shadow-[0_0_30px_-5px_oklch(0.72_0.19_60/0.5)]',
     ring: 'ring-orange-500/40',
     badge: 'border-orange-500/40 text-orange-300 bg-orange-500/10',
+  },
+  fuchsia: {
+    text: 'text-fuchsia-300',
+    textBright: 'text-fuchsia-200',
+    bg: 'bg-fuchsia-500/10',
+    bgSoft: 'bg-fuchsia-500/5',
+    border: 'border-fuchsia-500/40',
+    borderStrong: 'border-fuchsia-500/60',
+    fill: 'bg-fuchsia-500',
+    fillHover: 'hover:bg-fuchsia-400',
+    dot: 'bg-fuchsia-400',
+    glow: 'shadow-[0_0_30px_-5px_oklch(0.7_0.22_330/0.5)]',
+    ring: 'ring-fuchsia-500/40',
+    badge: 'border-fuchsia-500/40 text-fuchsia-300 bg-fuchsia-500/10',
   },
 };
 

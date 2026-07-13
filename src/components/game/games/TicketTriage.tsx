@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, Mail, Phone, Heart, Clock } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
+import { useLang, useT } from '@/store/game-store';
 
 interface Ticket {
   id: number;
@@ -14,20 +15,43 @@ interface Ticket {
   message: string;
 }
 
-const MESSAGES = [
-  'No recibo correo',
-  'Web caída',
-  'SSL vencido',
-  'cPanel lento',
-  'DNS error',
-  'FTP no conecta',
-  'Backup falla',
-  'DB timeout',
-  'Cuenta bloqueada',
-  'SSL renovar',
-  'WP error 500',
-  'Email spam',
-];
+const MESSAGES: Record<string, string[]> = {
+  es: [
+    'No recibo correo',
+    'Web caída',
+    'SSL vencido',
+    'cPanel lento',
+    'DNS error',
+    'FTP no conecta',
+    'Backup falla',
+    'DB timeout',
+    'Cuenta bloqueada',
+    'SSL renovar',
+    'WP error 500',
+    'Email spam',
+  ],
+  en: [
+    'No email received',
+    'Website down',
+    'SSL expired',
+    'cPanel slow',
+    'DNS error',
+    'FTP wont connect',
+    'Backup failed',
+    'DB timeout',
+    'Account locked',
+    'Renew SSL',
+    'WP error 500',
+    'Email spam',
+  ],
+};
+
+const CHANNEL_LABELS: Record<string, { chat: string; email: string; voip: string }> = {
+  es: { chat: 'chat', email: 'email', voip: 'voip' },
+  en: { chat: 'chat', email: 'email', voip: 'voip' },
+};
+
+const URG_LABEL: Record<string, string> = { es: 'URG', en: 'URG' };
 
 const CHANNEL_META = {
   chat: { icon: MessageSquare, color: 'text-cyan-300', bg: 'bg-cyan-500/15', border: 'border-cyan-500/40' },
@@ -39,6 +63,8 @@ const DURATION = 45; // seconds
 const LIVES = 3;
 
 export default function TicketTriage({ onScore }: MiniGameProps) {
+  const lang = useLang();
+  const tt = useT();
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(LIVES);
@@ -58,13 +84,14 @@ export default function TicketTriage({ onScore }: MiniGameProps) {
         const channel = (['chat', 'email', 'voip'] as const)[Math.floor(Math.random() * 3)];
         const priorityRoll = Math.random();
         const priority: Ticket['priority'] = priorityRoll > 0.7 ? 'high' : priorityRoll > 0.35 ? 'med' : 'low';
+        const msgs = MESSAGES[lang];
         const newTicket: Ticket = {
           id: idRef.current++,
           channel,
           x: 8 + Math.random() * 84,
           speed: 0.25 + Math.random() * 0.3 + priorityRoll * 0.15,
           priority,
-          message: MESSAGES[Math.floor(Math.random() * MESSAGES.length)],
+          message: msgs[Math.floor(Math.random() * msgs.length)],
         };
         return [...prev, newTicket];
       });
@@ -151,18 +178,18 @@ export default function TicketTriage({ onScore }: MiniGameProps) {
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="rounded-md border border-emerald-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-emerald-500/60">PUNTOS</span>
+            <span className="font-mono-game text-[10px] text-emerald-500/60">{tt('hud.score')}</span>
             <div className="font-mono-game text-xl font-bold text-emerald-300">{score}</div>
           </div>
           <div className="rounded-md border border-amber-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-amber-500/60">TIEMPO</span>
+            <span className="font-mono-game text-[10px] text-amber-500/60">{tt('hud.time')}</span>
             <div className={`font-mono-game text-xl font-bold ${timeLeft <= 10 ? 'text-rose-400' : 'text-amber-300'}`}>
               {timeLeft}s
             </div>
           </div>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="font-mono-game text-[10px] text-rose-500/60 mr-1">VIDAS</span>
+          <span className="font-mono-game text-[10px] text-rose-500/60 mr-1">{tt('hud.lives')}</span>
           {Array.from({ length: LIVES }).map((_, i) => (
             <Heart
               key={i}
@@ -174,7 +201,7 @@ export default function TicketTriage({ onScore }: MiniGameProps) {
 
       {/* Instructions */}
       <div className="text-center text-[11px] font-mono-game text-emerald-500/60">
-        {'› Click en cada ticket antes de que caiga. Rojo = urgente (+3), ámbar (+2), verde (+1).'}
+        {tt('tt.instr')}
       </div>
 
       {/* Play area */}

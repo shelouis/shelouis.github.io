@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Check, X, Users } from 'lucide-react';
 import type { MiniGameProps } from '../GameFrame';
+import { useLang, useT } from '@/store/game-store';
 
 type Specialty = 'cpanel' | 'network' | 'email' | 'ssl';
 
@@ -11,7 +12,7 @@ interface Agent {
   id: string;
   name: string;
   specialty: Specialty;
-  specialtyLabel: string;
+  specialtyLabel: { es: string; en: string };
   color: string;
   bg: string;
   border: string;
@@ -20,7 +21,7 @@ interface Agent {
 
 interface IncomingTicket {
   id: number;
-  subject: string;
+  subject: { es: string; en: string };
   specialty: Specialty;
 }
 
@@ -29,7 +30,7 @@ const AGENTS: Agent[] = [
     id: 'ana',
     name: 'Ana',
     specialty: 'cpanel',
-    specialtyLabel: 'cPanel / Hosting',
+    specialtyLabel: { es: 'cPanel / Hosting', en: 'cPanel / Hosting' },
     color: 'text-orange-300',
     bg: 'bg-orange-500/10',
     border: 'border-orange-500/50',
@@ -39,7 +40,7 @@ const AGENTS: Agent[] = [
     id: 'luis',
     name: 'Luis',
     specialty: 'network',
-    specialtyLabel: 'Redes / VPN',
+    specialtyLabel: { es: 'Redes / VPN', en: 'Networks / VPN' },
     color: 'text-cyan-300',
     bg: 'bg-cyan-500/10',
     border: 'border-cyan-500/50',
@@ -49,7 +50,7 @@ const AGENTS: Agent[] = [
     id: 'maria',
     name: 'María',
     specialty: 'email',
-    specialtyLabel: 'Email / SMS',
+    specialtyLabel: { es: 'Email / SMS', en: 'Email / SMS' },
     color: 'text-violet-300',
     bg: 'bg-violet-500/10',
     border: 'border-violet-500/50',
@@ -59,7 +60,7 @@ const AGENTS: Agent[] = [
     id: 'carlos',
     name: 'Carlos',
     specialty: 'ssl',
-    specialtyLabel: 'SSL / Dominios',
+    specialtyLabel: { es: 'SSL / Dominios', en: 'SSL / Domains' },
     color: 'text-emerald-300',
     bg: 'bg-emerald-500/10',
     border: 'border-emerald-500/50',
@@ -67,29 +68,31 @@ const AGENTS: Agent[] = [
   },
 ];
 
-const TICKETS_POOL: { subject: string; specialty: Specialty }[] = [
-  { subject: 'cPanel no carga el dominio', specialty: 'cpanel' },
-  { subject: 'Crear cuenta reseller WHM', specialty: 'cpanel' },
-  { subject: 'Backup conjet de cuenta', specialty: 'cpanel' },
-  { subject: 'Configurar VPN para sede', specialty: 'network' },
-  { subject: 'DNS no propaga registro A', specialty: 'network' },
-  { subject: 'SMTP rebotado por IP en blacklist', specialty: 'network' },
-  { subject: 'Campaña Email Marketing 50k', specialty: 'email' },
-  { subject: 'SMS masivo no envía', specialty: 'email' },
-  { subject: 'Buzel de correo lleno', specialty: 'email' },
-  { subject: 'Instalar certificado SSL Let\'s Encrypt', specialty: 'ssl' },
-  { subject: 'Renovar SSL wildcard', specialty: 'ssl' },
-  { subject: 'Registrar dominio .com nuevo', specialty: 'ssl' },
-  { subject: 'WordPress en cPanel caído', specialty: 'cpanel' },
-  { subject: 'Configurar tunel GRE', specialty: 'network' },
-  { subject: 'Auto-responder para info@', specialty: 'email' },
-  { subject: 'Migrar dominio entre registradores', specialty: 'ssl' },
+const TICKETS_POOL: { subject: { es: string; en: string }; specialty: Specialty }[] = [
+  { subject: { es: 'cPanel no carga el dominio', en: 'cPanel wont load domain' }, specialty: 'cpanel' },
+  { subject: { es: 'Crear cuenta reseller WHM', en: 'Create WHM reseller account' }, specialty: 'cpanel' },
+  { subject: { es: 'Backup conjet de cuenta', en: 'Account backup failed' }, specialty: 'cpanel' },
+  { subject: { es: 'Configurar VPN para sede', en: 'Configure VPN for office' }, specialty: 'network' },
+  { subject: { es: 'DNS no propaga registro A', en: 'DNS not propagating A record' }, specialty: 'network' },
+  { subject: { es: 'SMTP rebotado por IP en blacklist', en: 'SMTP bounced by blacklisted IP' }, specialty: 'network' },
+  { subject: { es: 'Campaña Email Marketing 50k', en: 'Email Marketing campaign 50k' }, specialty: 'email' },
+  { subject: { es: 'SMS masivo no envía', en: 'Bulk SMS not sending' }, specialty: 'email' },
+  { subject: { es: 'Buzel de correo lleno', en: 'Mailbox full' }, specialty: 'email' },
+  { subject: { es: "Instalar certificado SSL Let's Encrypt", en: "Install SSL Let's Encrypt cert" }, specialty: 'ssl' },
+  { subject: { es: 'Renovar SSL wildcard', en: 'Renew wildcard SSL' }, specialty: 'ssl' },
+  { subject: { es: 'Registrar dominio .com nuevo', en: 'Register new .com domain' }, specialty: 'ssl' },
+  { subject: { es: 'WordPress en cPanel caído', en: 'WordPress on cPanel down' }, specialty: 'cpanel' },
+  { subject: { es: 'Configurar tunel GRE', en: 'Configure GRE tunnel' }, specialty: 'network' },
+  { subject: { es: 'Auto-responder para info@', en: 'Auto-responder for info@' }, specialty: 'email' },
+  { subject: { es: 'Migrar dominio entre registradores', en: 'Migrate domain between registrars' }, specialty: 'ssl' },
 ];
 
 const TOTAL = 12;
 const MAX_WRONG = 4;
 
 export default function TeamRouter({ onScore }: MiniGameProps) {
+  const lang = useLang();
+  const tt = useT();
   const [queue, setQueue] = useState<IncomingTicket[]>(() =>
     [...TICKETS_POOL].sort(() => Math.random() - 0.5).slice(0, TOTAL).map((t, i) => ({ ...t, id: i })),
   );
@@ -154,22 +157,22 @@ export default function TeamRouter({ onScore }: MiniGameProps) {
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="rounded-md border border-emerald-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-emerald-500/60">ASIGNADOS</span>
+            <span className="font-mono-game text-[10px] text-emerald-500/60">{tt('hud.assigned')}</span>
             <div className="font-mono-game text-xl font-bold text-emerald-300">{Math.min(currentIdx, TOTAL)}/{TOTAL}</div>
           </div>
           <div className="rounded-md border border-rose-500/30 bg-black/40 px-3 py-1.5">
-            <span className="font-mono-game text-[10px] text-rose-500/60">MAL ASIGNADOS</span>
+            <span className="font-mono-game text-[10px] text-rose-500/60">{tt('hud.badassign')}</span>
             <div className="font-mono-game text-xl font-bold text-rose-300">{wrong}/{MAX_WRONG}</div>
           </div>
         </div>
         <div className="font-mono-game text-[10px] text-emerald-500/60 flex items-center gap-1.5">
           <Users className="h-3.5 w-3.5" />
-          TSM · ADCLICHOSTING · 4 analistas
+          TSM · ADCLICHOSTING · {lang === 'es' ? '4 analistas' : '4 analysts'}
         </div>
       </div>
 
       <div className="text-center text-[11px] font-mono-game text-emerald-500/60">
-        {'› Como Gerente (TSM), asigna cada ticket al especialista correcto.'}
+        {tt('tr.instr')}
       </div>
 
       {/* Play area */}
@@ -191,17 +194,17 @@ export default function TeamRouter({ onScore }: MiniGameProps) {
               >
                 <div className="flex items-center gap-2 mb-2">
                   <span className="rounded bg-rose-500/20 px-1.5 py-0.5 font-mono-game text-[9px] text-rose-300 uppercase">
-                    Nuevo Ticket
+                    {tt('tr.newticket')}
                   </span>
                   <span className="font-mono-game text-[10px] text-emerald-500/50">via WHMCS</span>
                 </div>
                 <div className="font-mono-game text-base sm:text-lg font-bold text-emerald-100">
-                  {current.subject}
+                  {current.subject[lang]}
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
-          <div className="font-mono-game text-[10px] text-emerald-500/60">→ ASIGNAR A:</div>
+          <div className="font-mono-game text-[10px] text-emerald-500/60">{tt('tr.assign')}</div>
         </div>
 
         {/* Agents */}
