@@ -1,6 +1,6 @@
-# 🎮 SYSADMIN QUEST — CV Interactivo
+# 🎮 SYSADMIN QUEST — Interactive CV
 
-> Un videojuego web interactivo estilo 8-bit retro (NES/SNES) que presenta la carrera profesional de José Pérez como un recorrido jugable de 8 niveles. Cada nivel representa un puesto real de trabajo, con su propio mini-juego, mecánicas únicas y habilidades desbloqueables basadas en el stack tecnológico real del CV.
+> An interactive 8-bit retro web game (NES/SNES style) that presents José Pérez's professional career as a playable journey of 8 levels. Each level represents a real job role, with its own mini-game, unique mechanics, and unlockable skills based on the actual tech stack from the CV.
 
 ![Tech Stack](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
@@ -9,20 +9,18 @@
 
 ---
 
-## 📋 Tabla de Contenidos
+## 🌐 Language / Idioma
 
-- [Motivo del Proyecto](#-motivo-del-proyecto)
-- [Características Principales](#-características-principales)
-- [Los 8 Niveles](#-los-8-niveles)
-- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [Cómo Jugar](#-cómo-jugar)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Instalación y Uso](#-instalación-y-uso)
-- [Plantilla para Recrear](#-plantilla-para-recrear)
+<details>
+<summary><b>📖 Click here to read in ESPAÑOL</b></summary>
 
 ---
 
-## 🎯 Motivo del Proyecto
+# 🎮 SYSADMIN QUEST — CV Interactivo
+
+> Un videojuego web interactivo estilo 8-bit retro (NES/SNES) que presenta la carrera profesional de José Pérez como un recorrido jugable de 8 niveles. Cada nivel representa un puesto real de trabajo, con su propio mini-juego, mecánicas únicas y habilidades desbloqueables basadas en el stack tecnológico real del CV.
+
+### 🎯 Motivo del Proyecto
 
 Los CV tradicionales en PDF son estáticos y no muestran las habilidades técnicas reales de un candidato. Este proyecto transforma un CV convencional en una **experiencia interactiva** donde las empresas pueden:
 
@@ -33,201 +31,245 @@ Los CV tradicionales en PDF son estáticos y no muestran las habilidades técnic
 
 El objetivo es que un reclutador o equipo técnico **aprenda el perfil de José Pérez de forma memorable e interactiva**, en lugar de leer un PDF aburrido.
 
----
+### ✨ Características Principales
 
-## ✨ Características Principales
+- **8 mini-juegos únicos** — cada nivel tiene mecánicas distintas inspiradas en tareas reales del puesto
+- **Bilingüe (Español/Inglés)** — selección de idioma al inicio, todo se traduce al instante
+- **Modo Desbloqueado** — juega cualquier nivel en cualquier orden
+- **Motor de sonido chiptune** — efectos 8-bit generados con Web Audio API + música de fondo
+- **Sección de Documentación** — guía interactiva con instrucciones, capturas y referencias al CV
+- **CV Interactivo Final** — 4 pestañas: Experiencia, Skills, Educación y Logros
+- **Sistema de progresión** — XP, estrellas (1-3), 50 habilidades desbloqueables, 9 logros
+- **Estética 8-bit auténtica** — Press Start 2P, scanlines CRT, bordes pixelados, paleta NES
 
-### 🕹️ 8 Mini-juegos únicos
-Cada nivel tiene mecánicas distintas inspiradas en tareas reales del puesto correspondiente — no son reskins del mismo juego.
-
-### 🌐 Bilingüe (Español / Inglés)
-Selección de idioma al inicio. Todo el contenido (UI, CV, instrucciones, sonidos) se traduce al instante. La elección persiste en localStorage.
-
-### 🔓 Modo Desbloqueado
-Toggle que permite jugar cualquier nivel en cualquier orden, sin necesidad de completar los anteriores. Ideal para reclutadores que quieren ver un nivel específico.
-
-### 🎵 Motor de sonido chiptune
-Efectos de sonido 8-bit generados programáticamente con Web Audio API (sin archivos de audio). Cada juego tiene su propio sonido distintivo, más música de fondo en el menú.
-
-### 📚 Sección de Documentación
-Guía interactiva con instrucciones paso a paso, objetivos, controles, sistema de puntuación, capturas de pantalla clickeables y referencia al rol real del CV para cada nivel.
-
-### 📄 CV Interactivo Final
-Pantalla de CV con 4 pestañas: Experiencia, Skills, Educación y Logros. Las secciones se desbloquean a medida que completas niveles. Incluye botón de imprimir/guardar PDF.
-
-### 🏆 Sistema de progresión
-- **XP y estrellas** (1-3 por nivel) con persistencia en localStorage
-- **50 habilidades** desbloqueables en 10 categorías
-- **9 logros** (Veterano, Leyenda DevOps, Arquitecto de IA, etc.)
-
-### 🎨 Estética 8-bit auténtica
-- Fuente **Press Start 2P** para títulos/HUD
-- Fuente **VT323** para texto cuerpo
-- Scanlines CRT + viñeta
-- Bordes pixelados de 3px (sin border-radius)
-- Paleta de colores saturada estilo NES
-- Animaciones escalonadas
-
----
-
-## 🎮 Los 8 Niveles
+### 🎮 Los 8 Niveles
 
 | # | Título | Empresa | Rol | Mecánica |
 |---|--------|---------|-----|----------|
-| 1 | **Primer Contacto** | VenezuelaHosting | Soporte L1 | Tickets caen en 3 canales (Chat/Email/VoIP); responde antes del SLA |
-| 2 | **Vigilancia Proactiva** | VenezuelaHosting | Soporte L2 | Grid de servidores Zabbix; repara fallos antes de que caiga el uptime |
-| 3 | **Multi-Panel Maestro** | LatincCloud | Soporte Técnico | Asigna configuraciones al panel correcto (cPanel/DirectAdmin/Plesk/VestaPanel) |
-| 4 | **Comandante de Soporte** | ADCLICHOSTING | Gerente TSM | Rutea tickets a 4 especialistas (cPanel/Redes/Email/SSL) |
-| 5 | **Arquitecto DevOps** | RORAIMADEVS | Jr. DevOps | Construye pipeline CI/CD colocando herramientas en etapas (Source→Build→Test→Deploy) |
-| 6 | **Cazador de Bugs** | ESTUDIO2B | Backend Dev | Revisa código PHP/Laravel y encuentra bugs (SQL Injection, mass assignment, etc.) |
-| 7 | **Migración Zero Downtime** | SERED | Soporte L2 | Migra 20 cuentas entre servidores sin sobrecargar el sistema |
-| 8 | **Arquitecto de Prompts** | Zentra SaaS | Prompt Engineer | Construye prompts estructurados seleccionando componentes (Rol/Contexto/Instrucción/Restricción/Formato) |
+| 1 | Primer Contacto | VenezuelaHosting | Soporte L1 | Tickets caen en 3 canales; responde antes del SLA |
+| 2 | Vigilancia Proactiva | VenezuelaHosting | Soporte L2 | Grid de servidores Zabbix; repara antes de que caiga el uptime |
+| 3 | Multi-Panel Maestro | LatincCloud | Soporte Técnico | Asigna configs al panel correcto (cPanel/DirectAdmin/Plesk/VestaPanel) |
+| 4 | Comandante de Soporte | ADCLICHOSTING | Gerente TSM | Rutea tickets a 4 especialistas (cPanel/Redes/Email/SSL) |
+| 5 | Arquitecto DevOps | RORAIMADEVS | Jr. DevOps | Construye pipeline CI/CD colocando herramientas en etapas |
+| 6 | Cazador de Bugs | ESTUDIO2B | Backend Dev | Revisa código PHP/Laravel y encuentra bugs |
+| 7 | Migración Zero Downtime | SERED | Soporte L2 | Migra 20 cuentas entre servidores sin sobrecargar |
+| 8 | Arquitecto de Prompts | Zentra SaaS | Prompt Engineer | Construye prompts estructurados seleccionando componentes |
 
----
+### 🛠️ Tecnologías Utilizadas
 
-## 🛠️ Tecnologías Utilizadas
-
-### Core
 | Tecnología | Versión | Uso |
 |------------|---------|-----|
-| **Next.js** | 16 | Framework React con App Router |
-| **TypeScript** | 5 | Tipado estático en todo el proyecto |
-| **React** | 19 | Librería de UI |
-| **Tailwind CSS** | 4 | Estilos utilitarios + tema 8-bit personalizado |
+| Next.js | 16 | Framework React con App Router |
+| TypeScript | 5 | Tipado estático |
+| Tailwind CSS | 4 | Estilos + tema 8-bit personalizado |
+| shadcn/ui | — | Componentes (Button, Dialog, Tabs, Switch, etc.) |
+| Framer Motion | 12 | Animaciones |
+| Zustand | 5 | Estado global con persist en localStorage |
+| Web Audio API | — | Motor de sonido chiptune (sin archivos externos) |
+| Press Start 2P + VT323 | Google Fonts | Tipografía retro 8-bit |
 
-### UI y Animación
-| Tecnología | Uso |
-|------------|-----|
-| **shadcn/ui** | Componentes base (Button, Dialog, Tabs, Switch, AlertDialog, Tooltip) |
-| **Framer Motion** | Animaciones de transición entre pantallas |
-| **Lucide Icons** | Iconografía |
+### 🚀 Cómo Jugar
 
-### Estado y Datos
-| Tecnología | Uso |
-|------------|-----|
-| **Zustand** | Estado global del juego (pantalla, XP, resultados, idioma, modo desbloqueado) |
-| **Zustand persist** | Persistencia en localStorage |
-| **Prisma ORM** | Disponible (configurado para SQLite) |
-
-### Audio
-| Tecnología | Uso |
-|------------|-----|
-| **Web Audio API** | Motor de sonido chiptune (oscilladores + gain nodes, sin archivos externos) |
-
-### Tipografía
-| Fuente | Uso |
-|--------|-----|
-| **Press Start 2P** (Google Fonts) | Títulos, HUD, labels — estilo pixel NES |
-| **VT323** (Google Fonts) | Texto cuerpo, instrucciones — terminal retro |
-| **Geist** (Google Fonts) | Fallback sans-serif |
-
----
-
-## 🚀 Cómo Jugar
-
-1. **Pantalla de idioma**: Elige Español o English. Activa el "Modo Desbloqueado" si quieres jugar cualquier nivel.
-2. **Pantalla de boot**: Animación de terminal que carga el juego (puedes saltarla).
+1. **Pantalla de idioma**: Elige Español o English. Activa el "Modo Desbloqueado" si quieres.
+2. **Pantalla de boot**: Animación de terminal que carga el juego.
 3. **Mapa de carrera**: 8 niveles en timeline. Completa uno para desbloquear el siguiente.
 4. **Cada nivel**: Lee el briefing → juega el mini-juego → supera la puntuación objetivo.
 5. **Desbloquea habilidades**: Cada nivel superado libera las skills reales de ese rol.
-6. **Revisa la Guía**: Botón "Guía/Guide" en la barra superior para ver instrucciones de cada nivel.
-7. **CV completo**: Botón "CV" para ver el currículum interactivo con todo desbloqueado.
+6. **Revisa la Guía**: Botón "Guía" para ver instrucciones de cada nivel con capturas.
+7. **CV completo**: Botón "CV" para ver el currículum interactivo.
+
+### 📦 Instalación
+
+```bash
+git clone https://github.com/shelouis/shelouis.github.io.git
+cd shelouis.github.io
+bun install
+bun run dev
+```
+
+### 👤 Autor
+
+**José Pérez** — Sysadmin · Jr. DevOps Engineer · Technical Support L2
+
+- 📧 shelouiss@gmail.com
+- 📱 +58 414 794 8934
+- 💼 [LinkedIn](https://www.linkedin.com/in/shel0u)
+- 🌍 Venezuela · Remoto
+
+</details>
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📖 Read in ENGLISH (default)
+
+### 🎯 Project Motivation
+
+Traditional PDF resumes are static and don't showcase a candidate's actual technical skills. This project transforms a conventional CV into an **interactive experience** where companies can:
+
+1. **Experience the candidate's competencies** by playing mini-games based on real tasks from each role
+2. **See the full tech stack** unlocking progressively, just like in a progression-based video game
+3. **Learn the context** of each role through instructions, screenshots, and references to the real CV
+4. **Enjoy the process** with an 8-bit retro aesthetic, chiptune sound effects, and background music
+
+The goal is for a recruiter or technical team to **learn José Pérez's profile in a memorable and interactive way**, rather than reading a boring PDF.
+
+### ✨ Key Features
+
+- **8 unique mini-games** — each level has distinct mechanics inspired by real tasks from the corresponding job role
+- **Bilingual (Spanish/English)** — language selection at startup, everything translates instantly. Choice persists in localStorage.
+- **Unlocked Mode** — play any level in any order, no need to complete previous ones. Ideal for recruiters who want to see a specific level.
+- **Chiptune sound engine** — 8-bit sound effects generated programmatically with Web Audio API (no audio files). Each game has its own distinctive sound, plus background music in the menu.
+- **Documentation section** — interactive guide with step-by-step instructions, objectives, controls, scoring system, clickable screenshots, and reference to the real CV role for each level.
+- **Interactive CV screen** — 4 tabs: Experience, Skills, Education, and Achievements. Sections unlock as you complete levels. Includes print/save PDF button.
+- **Progression system** — XP and stars (1-3 per level) with localStorage persistence, 50 unlockable skills across 10 categories, 9 achievements.
+- **Authentic 8-bit aesthetic** — Press Start 2P font for titles/HUD, VT323 for body text, CRT scanlines + vignette, 3px pixel borders (no border-radius), saturated NES-style color palette, stepped animations.
+
+### 🎮 The 8 Levels
+
+| # | Title | Company | Role | Mechanic |
+|---|-------|---------|------|----------|
+| 1 | **First Contact** | VenezuelaHosting | L1 Support | Tickets fall in 3 channels (Chat/Email/VoIP); answer before SLA expires |
+| 2 | **Proactive Watch** | VenezuelaHosting | L2 Support | Zabbix server grid; fix failures before uptime drops |
+| 3 | **Multi-Panel Master** | LatincCloud | Tech Support | Assign configs to correct panel (cPanel/DirectAdmin/Plesk/VestaPanel) |
+| 4 | **Support Commander** | ADCLICHOSTING | TSM Manager | Route tickets to 4 specialists (cPanel/Networks/Email/SSL) |
+| 5 | **DevOps Architect** | RORAIMADEVS | Jr. DevOps | Build CI/CD pipeline placing tools in stages (Source→Build→Test→Deploy) |
+| 6 | **Bug Hunter** | ESTUDIO2B | Backend Dev | Review PHP/Laravel code and find bugs (SQL Injection, mass assignment, etc.) |
+| 7 | **Zero Downtime Migration** | SERED | L2 Support | Migrate 20 accounts between servers without overloading the system |
+| 8 | **Prompt Architect** | Zentra SaaS | Prompt Engineer | Build structured prompts selecting components (Role/Context/Instruction/Constraint/Format) |
+
+### 🛠️ Technologies Used
+
+#### Core
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Next.js** | 16 | React framework with App Router |
+| **TypeScript** | 5 | Static typing throughout the project |
+| **React** | 19 | UI library |
+| **Tailwind CSS** | 4 | Utility styles + custom 8-bit theme |
+
+#### UI & Animation
+| Technology | Purpose |
+|------------|---------|
+| **shadcn/ui** | Base components (Button, Dialog, Tabs, Switch, AlertDialog, Tooltip) |
+| **Framer Motion** | Screen transition animations |
+| **Lucide Icons** | Iconography |
+
+#### State & Data
+| Technology | Purpose |
+|------------|---------|
+| **Zustand** | Global game state (screen, XP, results, language, unlocked mode) |
+| **Zustand persist** | localStorage persistence |
+| **Prisma ORM** | Available (configured for SQLite) |
+
+#### Audio
+| Technology | Purpose |
+|------------|---------|
+| **Web Audio API** | Chiptune sound engine (oscillators + gain nodes, no external files) |
+
+#### Typography
+| Font | Purpose |
+|------|---------|
+| **Press Start 2P** (Google Fonts) | Titles, HUD, labels — NES pixel style |
+| **VT323** (Google Fonts) | Body text, instructions — retro terminal |
+| **Geist** (Google Fonts) | Sans-serif fallback |
+
+### 🚀 How to Play
+
+1. **Language screen**: Choose Español or English. Enable "Unlocked Mode" to play any level.
+2. **Boot screen**: Terminal animation that loads the game (can be skipped).
+3. **Career map**: 8 levels on a timeline. Complete one to unlock the next.
+4. **Each level**: Read the briefing → play the mini-game → beat the target score.
+5. **Unlock skills**: Each completed level releases the real skills from that role.
+6. **Check the Guide**: "Guide" button in the top bar to see instructions for each level.
+7. **Full CV**: "CV" button to view the interactive resume with everything unlocked.
+
+### 📁 Project Structure
 
 ```
 src/
 ├── app/
-│   ├── globals.css          # Tema 8-bit (scanlines, pixel borders, fuentes)
-│   ├── layout.tsx           # Carga fuentes retro (Press Start 2P + VT323)
-│   └── page.tsx             # Router principal (lang → boot → map → game → cv → docs)
+│   ├── globals.css          # 8-bit theme (scanlines, pixel borders, fonts)
+│   ├── layout.tsx           # Loads retro fonts (Press Start 2P + VT323)
+│   └── page.tsx             # Main router (lang → boot → map → game → cv → docs)
 ├── lib/
-│   ├── cv-data.ts           # 8 niveles, 50 skills, educación, certificaciones (bilingüe)
-│   ├── i18n.ts              # Diccionario de ~150 strings UI (es/en)
-│   ├── sound.ts             # Motor chiptune (8 SFX + música de fondo)
-│   ├── types.ts             # Tipos TypeScript (GameState, JobLevel, etc.)
-│   └── accents.ts           # Mapa estático de colores por acento
+│   ├── cv-data.ts           # 8 levels, 50 skills, education, certifications (bilingual)
+│   ├── i18n.ts              # ~150 UI string dictionary (es/en)
+│   ├── sound.ts             # Chiptune engine (8 SFX + background music)
+│   ├── types.ts             # TypeScript types (GameState, JobLevel, etc.)
+│   └── accents.ts           # Static color map per accent
 ├── store/
-│   └── game-store.ts        # Zustand store con persist (XP, resultados, idioma)
+│   └── game-store.ts        # Zustand store with persist (XP, results, language)
 ├── components/
 │   └── game/
-│       ├── LanguageSelect.tsx   # Pantalla de selección de idioma
-│       ├── BootScreen.tsx        # Animación de terminal boot
-│       ├── StatusBar.tsx         # HUD superior (XP, nav, mute, unlock toggle)
-│       ├── CareerMap.tsx         # Timeline de 8 niveles
-│       ├── Documentation.tsx     # Guía con instrucciones + capturas
+│       ├── LanguageSelect.tsx   # Language selection screen
+│       ├── BootScreen.tsx        # Terminal boot animation
+│       ├── StatusBar.tsx         # Top HUD (XP, nav, mute, unlock toggle)
+│       ├── CareerMap.tsx         # 8-level timeline
+│       ├── Documentation.tsx     # Guide with instructions + screenshots
 │       ├── GameFrame.tsx         # Wrapper intro→playing→results
-│       ├── GameModal.tsx         # Carga el juego correcto
-│       ├── FinalCV.tsx           # CV interactivo (4 tabs)
-│       ├── SkillsPanel.tsx       # Stack técnico por categorías
-│       ├── Footer.tsx            # Footer sticky
+│       ├── GameModal.tsx         # Loads the correct game
+│       ├── FinalCV.tsx           # Interactive CV (4 tabs)
+│       ├── SkillsPanel.tsx       # Tech stack by categories
+│       ├── Footer.tsx            # Sticky footer
 │       └── games/
-│           ├── TicketTriage.tsx      # Nivel 1
-│           ├── ServerMonitor.tsx     # Nivel 2
-│           ├── MultiPanel.tsx        # Nivel 3
-│           ├── TeamRouter.tsx        # Nivel 4
-│           ├── PipelineBuilder.tsx   # Nivel 5
-│           ├── BugHunter.tsx         # Nivel 6
-│           ├── Migration.tsx         # Nivel 7
-│           ├── PromptArchitect.tsx   # Nivel 8
-│           └── index.ts             # Registry de juegos
+│           ├── TicketTriage.tsx      # Level 1
+│           ├── ServerMonitor.tsx     # Level 2
+│           ├── MultiPanel.tsx        # Level 3
+│           ├── TeamRouter.tsx        # Level 4
+│           ├── PipelineBuilder.tsx   # Level 5
+│           ├── BugHunter.tsx         # Level 6
+│           ├── Migration.tsx         # Level 7
+│           ├── PromptArchitect.tsx   # Level 8
+│           └── index.ts             # Game registry
 public/
-└── screenshots/              # 8 capturas de pantalla de cada juego
+└── screenshots/              # 8 gameplay screenshots
 ```
 
----
-
-## 📦 Instalación y Uso
+### 📦 Installation & Usage
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/shelouis/shelouis.github.io.git
 cd shelouis.github.io
 
-# Instalar dependencias
+# Install dependencies
 bun install
 
-# Iniciar servidor de desarrollo
+# Start development server
 bun run dev
 
-# Abrir http://localhost:3000
+# Open http://localhost:3000
 
-# Build de producción
+# Production build
 bun run build
 
 # Lint
 bun run lint
 ```
 
-### Requisitos
-- Node.js 18+ o Bun
-- Navegador moderno con Web Audio API
+### Requirements
+- Node.js 18+ or Bun
+- Modern browser with Web Audio API support
 
----
+### 📝 Recreate Template
 
-## 📝 Plantilla para Recrear
+This project includes a **prompt template** in [`PROMPT_TEMPLATE.md`](./PROMPT_TEMPLATE.md) that you can use to have an AI generate a similar project with your own CV.
 
-Este proyecto incluye una **plantilla de prompt** en [`PROMPT_TEMPLATE.md`](./PROMPT_TEMPLATE.md) que puedes usar para que una IA genere un proyecto similar con tu propio CV.
-
----
-
-## 👤 Autor
+### 👤 Author
 
 **José Pérez** — Sysadmin · Jr. DevOps Engineer · Technical Support L2
 
 - 📧 Email: shelouiss@gmail.com
-- 📱 Teléfono: +58 414 794 8934
+- 📱 Phone: +58 414 794 8934
 - 💼 LinkedIn: [in/shel0u](https://www.linkedin.com/in/shel0u)
-- 🌍 Ubicación: Venezuela · Remoto
+- 🌍 Location: Venezuela · Remote
+
+### 📄 License
+
+This project is for personal portfolio use. Feel free to draw inspiration from the structure to create your own interactive CV.
 
 ---
 
-## 📄 Licencia
-
-Este proyecto es de uso personal para portafolio. Siéntete libre de inspirarte en la estructura para crear tu propio CV interactivo.
-
----
-
+> *Made with ♥ and lots of pixels. Each level is based on a real job role — the unlocked skills are real.*
+>
 > *Hecho con ♥ y muchos píxeles. Cada nivel está basado en un puesto real de trabajo — las habilidades desbloqueadas son reales.*
