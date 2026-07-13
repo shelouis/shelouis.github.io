@@ -235,7 +235,7 @@ export default function TeamRouter({ onScore }: MiniGameProps) {
                 </div>
                 <span className={`font-mono-game text-xs font-bold ${a.color}`}>{a.name}</span>
                 <span className="font-mono-game text-[9px] text-emerald-500/60 text-center leading-tight">
-                  {a.specialtyLabel}
+                  {a.specialtyLabel[lang]}
                 </span>
                 {showOk && <Check className="absolute top-1 right-1 h-4 w-4 text-emerald-400" />}
                 {showBad && <X className="absolute top-1 right-1 h-4 w-4 text-rose-400" />}
